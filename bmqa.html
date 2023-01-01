@@ -1,0 +1,262 @@
+
+<!-- saved from url=(0050)file:///G:/DataStorage/IQA/MMQA/Homepage/bmqa.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Blind Multimodal Quality Assessment: A Case Study of Low-light Image</title></head><body>
+
+<center><h1>Blind Multimodal Quality Assessment: A Case Study of Low-light Image</h1></center>
+
+<center><h3>Miaohui WANG, Zhuowei XU <i>et al.</i></h3></center>
+
+
+
+
+<hr><a name="Abstract"><b>Abstract</b></a>
+
+<br>Blind image quality assessment (BIQA) aims at automatically and accurately forecasting objective scores for visual signals,which has been widely used to monitor product and service quality in low-light applications, covering smartphone photography, video surveillance, autonomous driving, etc. Recent developments in this field are dominated by unimodal solutions inconsistent with human subjective scoring patterns, where the human visual system (HVS) can be simultaneously influenced by multiple sensory information (e.g., sight and hearing). In this article, we present a unique blind multimodal quality assessment (BMQA) of low-light images from both subjective and objective perspectives. To investigate the multimodal mechanism, we first establish a BMQA database with authentic low-light distortions, containing image and audio modality pairs. Further, we specially design the key modules of BMQA, considering multimodal quality representation, latent feature alignment and fusion, and hybrid self-supervised and supervised learning. Extensive experiments show that our BMQA yields state-of-the-art accuracy on the benchmark multimodal database. In particular, we also build an independent single-image modality low-light database, which is used to verify its applicability and generalization performance in mainstream unimodal applications. Qualitative and quantitative results show that BMQA achieves superior performance to existing BIQA approaches as long as a pre-trained quality semantic description model is provided. The proposed framework and two databases as well as the collected BIQA methods and evaluation metrics are made publicly available on https://charwill.github.io/bmqa.html.
+
+<br>
+<p>
+</p><hr><a name="Download"><b>Download</b></a>
+<br>
+[<a href="https://drive.google.com/file/d/1YXY1fdxW3T4kx3utDurkGIjKEAnnzUGy/view?usp=share_link">MLIQ Dataset</a>]
+[<a href="https://docs.google.com/presentation/d/1SjD07NB1XjT42-lg4L7ClqV5qG7BOZJEncYKiDv2Atg/edit?usp=share_link">Dark-4K Dataset</a>]
+[<a href="https://drive.google.com/file/d/1nZmGODJn17GdHR1HeUJFUkVzItsYTVco/view?usp=share_link">Source Code</a>] 
+<br>
+<p></p>
+<hr>
+
+
+<br>
+<a name="Current challenge"><b>1. Current challenge</b></a>
+<p>Recently, the storage, transmission, and processing of low-light images are unavoidable, especially in smartphone photography, video surveillance, autonomous driving, <i>etc</i>. Imaging in weak-illumination environments can lead to uneven brightness, poor visibility, impaired color, and increased hybrid noise, degrading both user experience and product value. Further, low-light images also pose various challenges to the performance of mainstream vision algorithms, including object detection, recognition, classification, tracking, assessment, segmentation, and enhancement. Therefore, it is essential to develop a reliable objective quality indicator for low-light images, which helps to meet the quality measurement and inspection needs in various industrial products and computer vision tasks.</p>
+<p>The characteristics of low-light images are dramatically different from existing distortion-specific scenarios. More specifically, an authentic low-light image often has the following distinct distortion features: uneven brightness, poor visibility, color impairment, heavy noises, etc. As a result, it is difficult for existing BIQAs to achieve satisfactory performance on low-light images. Futhermore, existing BIQAs mainly extract features from a single image modality to predict objective scores. The human visual system (HVS) is the final receiver of visual signals in the IQA task, but human visual perception is essentially the joint action of multiple sensory information. However, existing hand-crafted and deep-learned IQA methods rarely consider multimodal information and are still limited in measuring low-light images. As a result, how to utilize multimodal learning to more accurately perform the quality assessment of low-light images is the most fundamental motivation behind this work, as illustrated in Fig. 1.</p>
+<p>When scoring the quality of visual signals, humans can be affected by multiple sensing information (<i>e.g.</i>, sight, hearing) at the same time. After acquired exercise, our brains can easily make connections between different modality data and further build a good representation of the characteristics of things. For example, when a single image modality is influenced by various low-light noises, the audio modality is expected to provide supplementary or shared quality description clues, such as ambient sound, tone and timbre, and semantic visual understanding. Consequently , multimodal-driven IQA (MIQA) aims to build a visual indicator similar to the manner of human visual perception, and it is expected to obtain better performance from the supplementary information of different modalities.</p>
+<p>Meanwhile, psychological experiments show that 94% of the information humans perceive comes from sight (83%) and hearing (11%). Further, early experiments on the McGurk effect also indicate that visual input can bring a biased influence on speech recognition, which has inspired the improvement by jointly introducing visual information. Based on these findings, the integration of visual and auditory information is expected to learn better quality descriptors to represent human visual perception. Therefore, we mainly investigate the multimodal mechanism of visual and auditory in the low-light IQA task.</p>
+<img src="./bmqa_files/img1.png" width="964.2" height="283.8"><br><b>Fig. 1: Illustration of blind multimodal quality assessment (BMQA).</b><br>
+<p>We summary the challenges encountered above to make the following work:
+</p><p>• Inspired by the human visual perception mechanism, we propose to apply multimodal learning to the BIQA problem by integrating visual and auditory information. To the best of our survey, this is one of the first attempts to explicitly explore low-light quality assessment across different modalities. </p>
+<p>• To verify the feasibility of multimodality in the BIQA task, we first construct a new MLIQ database based on low-light images, which contains 3600 pairs of image and audio data. In addition, we have carried out a statistical analysis of the audio modality data by extracting the quality features of semantic description, which is helpful to demonstrate the supplementary  or shared quality clues.</p>
+<p>• Based on the MLIQ database, we further investigate three main modules in the MIQA task, including multimodal quality representation, latent feature alignment, and fusion prediction. To improve the efficiency of deep model training, we develop an effective BMQA method by incorporating both multimodal self-supervision and supervision.</p>
+<p>• To demonstrate the applicability of our BMQA, we have also established a new low-light image quality database, namely Dark-4K. Dark-4K contains only a single image modality , and the relevant audio pair is not available. Dark-4K is used to verify the applicability and generalization performance under the unimodal assessment scenarios. Experiments show that this hybrid learning paradigm guarantees that BMQA achieves state-of-the-art performance on two different low-light image benchmark databases.</p>
+<p></p>
+<br>
+<br>
+
+
+
+
+
+<a name="MLIQ Database"><b>2. MLIQ Database</b></a>
+<p>The established database contains RGB images with the subjective quality scores and audio clips with the quality semantic description (QSD) as shown in Fig. 2. </p>
+<img src="./bmqa_files/img2.png" width="1180" height="568"><br><b>Fig. 2: Examples of some image-audio-MOS pairs on our MLIQ database.</b> We provide some representative examples for analysis and discussion, including luminance, content, color, blurry, noise, and saturation.
+<br>
+
+
+<p><b>2.1 Multi-modality Construction. </b></p>
+
+
+<p>
+<b>2.1.1 Image Modality </b>
+</p><p>MLIQ consists of a total of 3600 low-light image samples which 1360 low-light images are captured by two new devices, <i>Canon EOS 6D</i> and <i>Huawei Mate 30 Pro</i> and 2240 low-light images are from NNID. These low-light samples are captured in real-world environments (<i>e.g.</i>, indoors and outdoors) with a total of five different mobile devices. One device captures a visual scene with five different settings. These five settings are allowed to be different for different scenarios. The resolution of each low-light sample ranges from 512×512 to 2048×2048. Therefore, MLIQ is the largest no-reference low-light database, covering various scenes, large volume, complex noise, diverse devices, and authentic distortion. We take a single stimulus to obtain the MOS label for each low-light image on MLIQ. </p>
+<img src="./bmqa_files/img3.png" width="1060" height="200"><br><b>Fig.3: A statistical analysis of the proposed multimodal MLIQ database:</b> (a) shooting device, (b) image resolution, (c) application scenario, (d) MOS value, and (e) confidence interval. <br>
+<p>A statistical analysis of our MLIQ is illustrated in Fig. 3. Fig. 3 (d) reports the histogram distribution of the MOS value. As seen, MOS values span the entire quantified range of visual quality with sufficient and fairly uniform samples at each level. This shows that our MLIQ database covers the entire range of visual quality (from poor to excellent), and also exhibits a good separation of the perceptual quality. Fig. 3 (e) reports the 95% confidence intervals obtained from the mean and standard deviation of the rating score for each image as the consistency evaluation, where the confidence interval is mainly distributed between 0.10 and 0.18. It indicates that all observers have reached a high agreement on the perceptual quality of low-light images. Therefore, the proposed MLIQ database can be used as a ground-truth for the performance evaluation of objective quality indicators.</p>
+<p></p>
+
+
+<p>
+<b>2.1.2 Audio Modality. </b>
+</p><p>By synthesizing some previous work, we design two QSD principles based on the perception mechanism of the HVS. It can exhibit feed-forward visual information extraction and aggregation from the retina (<i>i.e.</i>, <i>intuitive visual perception</i>) to the primary visual cortex (<i>i.e.</i>, <i>empirical visual perception</i>). These principles are used to guide annotators in generating their verbal descriptions.</p>
+<p><b>Intuitive Visual Perception: </b> This principle is inspired by previous physiological and psychological experiments on HVS, including saliency detection and just noticeable difference. It is closely related to early vision and focuses on the relationship between optical stimuli from visual observation and the HVS experience. Intuitive vision mainly focuses on some basic data characteristics, covering overall brightness, color status, texture, salient objects, <i>etc</i>. For instance, the verbal description in Fig. 2 (c) contains the QSD features, such as the luminance information '<i>bright</i>', the color information '<i>green</i>' and '<i>pink</i>', and the observed object information '<i>tree</i>' and '<i>path</i>'.</p>
+<p><b>Empirical Visual Perception: </b> This principle is inspired by modern theoretical studies in visual theory that embraces empiricism as the dominant paradigm of human perception construction, such as Gregory's theory. These studies demonstrate that while part of what we perceive comes from objects in front of us, another part (and possibly a larger part) always comes from our brains. The empiricism principle is closely related to late vision and focuses on
+exploring how the viewpoints of observers are involved in the visual perception experience. Empirical vision mainly
+involves some common real-world knowledge as well as empirical visual understanding, and highlights the possible real-life scenarios of low-light observations. For instance, subjects use '<i>driving</i>' rather than '<i>sitting</i> for '<i>ship</i>' as shown in Fig. 2 (e).</p>
+<p></p>
+
+<p>There are two main challenges in obtaining the QSD information: On one hand, audio has explicit temporal attributes, while image only has spatial attributes. There is still a lack of research on how to construct the QSD feature between the audio and image data. On the other, various audio components convey the QSD information, such as timbre, pitch, rhythm, fluency, <i>etc</i>. It is necessary to avoid the information deviations coming from different audio components as much as possible. Thus, we construct the audio modality in the manner of scene dictation which is based on two reasons: 1) Scene dictation presents human observations and is dominated by semantic information, which is at the cognitive level and thus contains little subjective emotion. 2) Scene dictation also helps to avoid information bias due to the speaker's voice or personal pronunciation preference in later audio analysis. In the experiments, speakers are asked to provide a meaningful and concise verbal description for each low-light image. For the content of each dictation, the following requirements need to be met:
+</p><p>• For images with salient objects (<i>e.g.</i>, the ship in Fig. 4 (e)), trying to describe all important objects in the image content. For images with salient scenes (<i>e.g.</i>, the hallway scene in Fig. 4 (c)), trying to describe the overall environment. For images without any salient content (<i>e.g.</i>, the building with many small objects in Fig. 4 (a)), trying to describe attractive content part, including objects and scenes.</p>
+<p>• Trying to describe the overall brightness by using the relevant QSD features, such as 'bright', 'light', 'dim', or 'dark'.</p>
+<p>• Trying to describe the main attributes of each object, such as color, brightness, texture (<i>e.g.</i>, 'wooden' pole in Fig. 4 (b), 'stone' path in Fig. 4 (c), and 'brick' sidewalk in Fig. 4 (d)), <i>etc</i>.</p>
+<p>• Trying to describe the visual perception experience by using the relevant QSD features, such as 'colorful', 'vivid', 'blurred', 'noisy', <i>etc</i>.</p>
+<p></p>
+
+
+<p><b>2.2 Dataset Analysis. </b>
+</p><p>We analyze correlations between images, audios, and quality scores (i.e., MOS) on the MLIQ database. Specifically, the image modality represents a visual stimulus, and the corresponding audio modality represents a subjective cognition and understanding of the image modality. Based on the statistical analysis of MLIQ, we attempt to capture the underlying connection between visual signals and verbal descriptions. We conduct the statistical analysis based on brightness, content, color, and then discuss other factors affecting quality perception on low-light images. The established database contains RGB images with the subjective quality scores and audio clips with the quality semantic description (QSD) as shown in Fig. 2. </p>
+<p></p>
+
+
+<p>
+<b>2.2.1. Luminance. </b>
+</p><p>The quality level of low-light images is sensitively dependent on visual brightness perception. The audio modality contains quality clues (i.e., keywords) that describe the luminance status, which can effectively provide supplementary information. Therefore, we calculate the histogram of the luminance QSD feature on the entire database, as shown in Fig. 4. The above observations suggest that the luminance QSD features in the audio clips have a strong relationship with the image quality.</p>
+<img src="./bmqa_files/img4.png" width="840" height="250"><br><b>Fig.4: Statistics of the luminance QSD feature.</b><br>
+<p>We start by figuring out how audio data describes the image quality from the view of brightness. Audio clips contain luminance QSD features, covering '<i>dark</i>', '<i>dim</i>', '<i>light</i>', and '<i>bright</i>', which represent the illumination condition. We calculate the histogram of the luminance QSD feature on the entire database, as shown in Fig. 4. As seen, the MOS value corresponding to '<i>dark</i>', '<i>dim</i>', '<i>light</i>', and '<i>bright</i>' is concentrated around 0.2 to 0.4, 0.4 to 0.5, 0.5 to 0.6, and 0.6 to 0.8, respectively . Intuitively , the histogram of each luminance QSD feature should obey an independent Gaussian distribution. Therefore, we adopt a Gaussian function to fit the histogram of '<i>dark</i>', '<i>dim</i>', '<i>light</i>', and '<i>bright</i>', and the Gaussian centers are 0.2758, 0.4283, 0.5714, and 0.6737, respectively. The above observations suggest that the luminance QSD features in the audio clips have a strong relationship with the image quality.</p>
+<p>Next, we analyze the relationship between image, audio, and quality score based on the brightness. We report the stacked histogram of the length of verbal at various luminance conditions in Fig. 4 (a). As seen, '<i>dim</i>' and '<i>dark</i>' represent low luminance, which tend to have shorter verbal lengths. This is consistent with our experience that people often have difficulty describing very dark scenes with a long verbal description. </p>
+<p>In addition, we calculate the average luminance value for each image as the objective luminance level and report the scatter plot of the corresponding quality score as shown in Fig. 4 (b). We further mark colors for each plot based on the luminance keyword contained in the corresponding audio clip, as the subjective luminance level. It can be observed that as the luminance level increases, the quality score generally increases as shown in different scatter colors in Fig. 4 (b). It suggests that the luminance QSD feature is an efficient representation of visual quality perception.</p>
+<p></p><br>
+
+
+<img src="./bmqa_files/img5.png" width="1080" height="260"><br>
+<b>Fig.5: Statistics of other QSD features:</b> (a) content, (b) color, and (c) keyword.<br>
+
+
+<p>
+<b>2.2.2 Content. </b>
+</p>
+<p>Due to insufficient exposure, low-light distortions usually result in incomplete or unclear visual quality, further leading to annoying visual experience. The audio modality contains verbal descriptions of observed objects, which can effectively provide auxiliary information on which objects the visual attention is focused on. Therefore, we explore the relationship between image quality and content.</p>
+<p>The reduction of observed objects is often reflected in the reduction of object descriptions in the audio clip, as shown in Fig.2 (b). Based on this observation, we count the quantity of observed objects contained in each audio clip and report the corresponding MOS values. Fig.5 (a) consists of stacked column charts and scatter plots, covering the number of observed objects ranging from 1 to 5. For each number of observed objects, the stacked column chart reports the image number at each luminance level, including 'dark', 'dim', 'light', and 'bright', respectively.</p>
+<p>Based on the statistical data of image content, we can draw some interesting conclusions:</p>
+<p>• The curve in Fig.5 (a) shows that the quality score tends to be higher as the quantity of observed objects increases. This may indicate that images with better visual quality usually contain more identifiable observed objects.</p> 
+<p>• The stacked histogram in Fig.5 (a) shows that when the luminance levels get lower, the number of observed object decreases.</p>
+<p>• The quality score increases caused by the quantity increase of observed objects is small (0.0657 from 1 to 5), which indicates that it is difficult to sensitively reflect the quality experience via the quantity of observed objects. One possible reason may be that low-light distortion tends to lose detail rather than salient objects, while the quality score depends more on the salient content itself.</p>
+<p></p>
+<p></p>
+
+
+<p>
+<b>2.2.3 Color. </b>
+</p><p>Low-light distortion tends to exhibit low color contrast and low saturation. The audio modality contains verbal descriptions of the observed colors, which may effectively provide useful QSD information on visual perception responses. Therefore, we investigate the relationship between image quality and observed colors.</p>
+<p>The impairment of observed colors is reflected as the reduction of color descriptions in the audio clip, as shown in Fig.2 (c). Inspired by this, we count the number of color QSD features contained in each audio clip and report the corresponding MOS values. Fig.5 (b) consists of stacked column charts and scatter plots, covering the number of color words ranging from 0 to 4. For each number of color QSD features, the stacked column chart reports the image quantity at each luminance level, including 'dark', 'dim', 'light' and 'bright', respectively. </p>
+<p>Based on the statistical data of image color, we can also draw some interesting conclusions: 
+</p><p>• The curve in Fig.5 (b) shows that the quality score tends to be higher as the number of color QSD features increases. This may indicate that images with a better visual perception experience usually contain more recognizable colors, as shown in Fig.2 (c).</p>
+<p>• The stacked histogram in Fig.5 (b) shows that when the visual perceptual luminance gets lower, the number of observed color tends to be lower.</p>
+<p>• The quality score increases caused by the number increase of observed color is large (0.2747 from 0 to 4). This may indicate that the quantity of observed color can sensitively represent the quality experience of low-light distortion.</p>
+
+
+
+<p>
+<b>2.2.4 Other factors. </b>
+</p><p>Low-light photography is also often affected by many other factors, including blurring, heavy noise and low saturation. A low-light image may get blurred by the camera shake if it is set to a long exposure time, as shown in Fig.2 (d). The increase in light sensibility reduces the signal-to-noise ratio while increasing the exposure, as shown in Fig.2 (e). In addition, both underexposure and overexposure significantly affect the color saturation, which further affect the visual experience, as shown in Fig.2 (f). </p>
+<p>Considering that the auditory QSD information may contain some keywords that directly describe these degradation features, we collect the audio clips that contain distortion-based keywords and report the corresponding MOS values.
+Fig.5 (c) shows stacked column charts and scatter plots, covering the distortion-related keywords of 'blur', 'noisy', 'dull', and 'vivid'.</p>
+<p>Based on the above statistical data, we can draw some interesting conclusions:
+</p><p>• QSD features such as 'blur', 'noisy', and 'dull' represent poor visual experience, while 'vivid' represents good visual experience.</p>
+<p>• The proportion of 'noisy' is large in the 'bright' luminance level, which indicates that noises in low-light images are more easily perceptible.</p>
+<p>• The proportion of 'blur' is similar under different luminance levels, which indicates that blur is not closely related to lumination.</p>
+<p>• The proportion of 'dull' is large in the 'dark' and 'dim' luminance level, while the proportion of 'vivid' is large in the 'light' and 'bright' luminance level. These observations are consistent with the fact that human eyes prefer highly saturated colors, as shown in Fig.2 (f).</p>
+<br><br>
+
+
+
+
+
+
+<a name="Dark-4K Database"><b>3. Dark-4K Database</b></a>
+<p>To validate the cross-dataset performance, we further establish a new ultra-high-definition (UHD) lowlight database for the cross-dataset validation, namely Dark-4K. The original images of Dark-4K. Dark-4K consists of 424 raw low-light images, which is captured by two consumer electronics: <i>Sony α7S-II</i> and <i>Fujifilm X-T2</i>. These two cameras have different imaging hardware: <i>Sony</i> has a full-frame Bayer sensor, and the <i>Fujifilm</i> camera has an APS-C X-Trans sensor. Dark-4K supports the quality assessment of low-light images produced by different filter arrays. </p>
+<img src="./bmqa_files/img12.png" width="600" height="200"><br><b>Fig.6: A statistical analysis of the proposed unimodal Dark-4K database</b>: (a) histogram of MOS values and (b) distribution of confidence intervals.
+<p>The subjective experiments on Dark-4K maintain the same settings of the MLIQ. The histogram of labeled MOS results and the 95% confidence intervals for the subjective ratings are shown as Fig.6 (a) and Fig.6 (b), respectively. </p>
+<br><br>
+
+
+
+
+<a name="BMQA Framework"><b>4. BMQA Framework</b></a>
+<p>Based on the proposed MLIQ database, we design a unique deep-learned BMQA method as shown in Fig.7. We address the main challenges of multimodality in the BIQA task, including feature representation, alignment, and fusion. </p>
+<img src="./bmqa_files/img6.png" width="1040" height="340"><br><b>Fig.7: Overall learning framework of the proposed BMQA.</b><br>
+<p>• <b>Multimodal quality representation</b> refers to extracting and integrating effective features that take the advantage of the supplementary or shared quality description clues between visual and auditory data. In this part, we select 3 representative networks as the backbone of audio feature extractor including Bag-of-Word (<i>denoted as</i> BoW), recurrent neural network (<i>denoted as</i> RNN), and Transformer (<i>denoted as</i> TransF), and 5 representative networks as the backbone of image feature extractor, including VGG, ResNet (<i>denoted as</i> as RN), EfficientNet (<i>denoted as</i> as EN), Vision-in-Transformer (<i>denoted as</i> as ViT), and ConvNeXT (<i>denoted as</i> as CNXT).</p>
+<p>• <b>Multimodal quality alignment</b> refers to finding the corresponding quality representation relationship between the image and audio modalities. In this part, we adopt the cosine similarity to measure the relative difference between image and audio modalities, and design an attentive pooling for multimodal quality alignment.</p>
+<p>• <b>Multimodal quality fusion</b> takes the benefit of both visual and auditory modalities is that the image quality can be described from different perspectives. To preserve quality information as much as possible, we integrate visual and auditory features via a concatenation operation. Next, we employ a linear probe to fuse and forecast a final quality score.</p>
+
+
+
+<br><br>
+<a name="BMQA Validation"><b>5. BMQA Validation</b></a>
+<p>In this section, extensive experiments are conducted on two latest benchmark low-light image databases. Specifically , we verify the effectiveness of our BMQA on the image-audio database MLIQ (<i>i.e.</i>, BMQA<sup>image-audio</sup>) and the image-only database Dark-4K (<i>i.e.</i>, BMQA<sup>image-only</sup>), respectively. Besides, we demonstrate the comparison results with 25 competitive methods, including 8 hand-crafted BIQAs and 17 deep-learned BIQAs. We provide the detailed descriptions of the experimental validation, analysis, and discussion as follows.</p>
+
+
+<p>
+<b>5.1. Feature Representation Validation. </b>
+</p><p>To verify the effectiveness of visual and auditory feature extractors, we have conducted the experiments on several representative F<sub>aud</sub> and F<sub>img</sub> models.Table 1 provides the overall comparison results of 15 F<sub>aud</sub> and F<sub>img</sub> combinations. As seen in Table 1, all 15 BMQA variants achieve promising performance, which verify the excellent robustness capability of our multimodal paradigm.</p>
+<b>Table 1: Overall performance comparison between 15 F<sub>img</sub> and F<sub>aud</sub> combinations on the MLIQ database.</b><br><img src="./bmqa_files/img7.png" width="520" height="300"><br>
+<p>In addition, considering that image is the main modality in the BIQA task, we further explore the impact of different network variants of F<sub>img</sub>. Fig.8 provides the PLCC and SRCC curves of five F<sub>img</sub> models.This result suggests that our BMQA framework can maintain excellent performance for lightweight models.</p>
+<img src="./bmqa_files/img8.png" width="560" height="360"><br><b>Fig.8. Performance comparison of different image feature extractors F<sub>img</sub>.</b><br>
+
+
+
+<p>
+<b>5.2. Overall Performance Comparison. </b>
+</p><p>From Table 2, it is observed that the average prediction accuracy of three BMQAs significantly outperforms the other 25 competitive BIQA methods.. The best result obtains a PLCC score of 0.9121, a SRCC score of 0.9065, and a RMSE score of 0.0802, which is very promising in the BIQA task with authentic distortions.Furthermore, the experimental results also show that there is no significant performance difference for our BMQA from Device-I to Device-V, and the entire database, suggesting that different shooting devices have a slight side-effect in multimodal learning.</p>
+<b>Table 2. Performance comparison of the proposed BMQA method and 25 state-of-the-art BIQAs on the MLIQ database.</b><br> The best results of the hand-crafted and deep-learned BIQAs are highlighted in <b>bold</b> for different devices, and the best results of our BMQA are highlighted in <u><b>underline</b></u>.<br><img src="./bmqa_files/img10.png" width="1000" height="560"><br>
+
+
+
+<p>
+<b>5.3. Cross-dataset Validation on Image-only Case. </b>
+</p><p>We have validated the effectiveness of our BMQA<sup>image-audio</sup> in terms of feature representation and overall performance. Nevertheless, the proposed BMQA has to face the challenge due to the absent of the audio modality. Frankly speaking, it is impractical to require qualityrelated audio descriptions for every low-light image. In other words, the question is how to use our BMQA when the audio modality is absent. To address this challenge, we further propose a feasible scheme and validate it on another independent low-light database, Dark-4K, which contains only paired image samples and their MOS labels.</p>
+<p>Considering that the QSD information in an audio clip can be mainly represented by the related text information in the BIQA task, we believe that F<sub>aud2txt</sub> can also be replaced by a recent image caption model: 'show and tell' (SAT). Therefore, when the audio modality is unavailable, BMQA employs an image captioning model to generate the feature representation of F<sub>aud2txt</sub>. To the best of our survey, few existing image captioning models are specially trained for the BIQA task, and hence the generated text information is less relevant to the visual quality experience, which may not meet the QSD principles. Therefore, we train a special QSD-based captioning model F<sub>img2txt</sub> based on the MLIQ database. </p>
+<p>Table 4 provides the overall comparison results of all 17 deep-learned BIQAs in terms of PLCC, SRCC, and RMSE. As seen, our BMQAs achieve the state-of-theart performance on the cross-dataset validation. The best BMQAimage-only CNXT-B+T ransF obtains a PLCC score of 0.9156, a SRCC score of 0.9085, and a RMSE score of 0.0605. Experimental results verify the applicability and generalization performance of our BMQA framework.</p>
+<b>Table 3. Performance comparison of the proposed BMQA and 17 deep-learned BIQAs on the Dark-4K database.</b><br> The best results of the deep-learned BIQAs are highlighted in <b>bold</b>, and the best results of our BMQA are highlighted in <u><b>underline</b></u>.<br><img src="./bmqa_files/img11.png" width="410" height="360"><br>
+
+
+
+<hr>
+<a name="References"><b>References</b></a>
+<br>
+[<i>NNID</i>] Tao Xiang, Ying Yang, and Shangwei Guo. Blind night-time image quality assessment: Subjective and objective approaches. <i>IEEE Transactions on Multimedia</i>, 22(5):1259-1272, 2019. [ <a href="https://ieeexplore.ieee.org/abstract/document/8821407">paper</a>, <a href="https://sites.google.com/site/xiangtaooo/">database</a> ]
+<br>
+[<i>Dark-4K</i>] Chen Chen, Qifeng Chen, Jia Xu, and Vladlen Koltun. Learning to see in the dark. In <i>IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</i>, pages 3291-3300, 2018. [ <a href="https://openaccess.thecvf.com/content_cvpr_2018/html/Chen_Learning_to_See_CVPR_2018_paper.html">paper</a>, <a href="https://cchen156.github.io/SID.html">database</a> ]
+<br>
+[<i>SAT</i>] Kelvin Xu, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan Salakhudinov, Rich Zemel, and Yoshua Bengio. Show, attend and tell: Neural image caption generation with visual attention. In <i>PMLR International Conference on Machine Learning (ICML)</i>, pages 2048-2057, 2015. [ <a href="https://proceedings.mlr.press/v37/xuc15.html">paper</a>, <a href="https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning">implementation</a> ]
+<br>
+[<i>Mittal2012TIP</i>] Anish Mittal, Anush Krishna Moorthy, and Alan Conrad Bovik. No-reference image quality assessment in the spatial domain. <i>IEEE Transactions on Image Processing</i>, 21(12):4695-4708, 2012. [ <a href="https://ieeexplore.ieee.org/document/6272356">paper</a>, <a href="http://live.ece.utexas.edu/research/quality/BRISQUE_release.zip">implementation</a> ]
+<br>
+[<i>Liu2014SPIC</i>] Lixiong Liu, Bao Liu, Hua Huang, and Alan Conrad Bovik. No-reference image quality assessment based on spatial and spectral entropies. <i>Elsevier Signal Processing: Image Communication</i>, 29(8):856-863, 2014. [ <a href="https://www.sciencedirect.com/science/article/abs/pii/S0923596514000927">paper</a>, <a href="https://github.com/utlive/SSEQ">implementation</a> ]
+<br>
+[<i>Zhang2015TIP</i>] Lin Zhang, Lei Zhang, and Alan C Bovik. A feature-enriched completely blind image quality evaluator. <i>IEEE Transactions on Image Processing</i>, 24(8):2579-2591, 2015. [ <a href="https://ieeexplore.ieee.org/document/7094273">paper</a>, <a href="https://cslinzhang.gitee.io/home/ILNIQE/ILNIQE.htm">implementation</a> ]
+<br>
+[<i>Li2016SPL</i>] Qiaohong Li, Weisi Lin, and Yuming Fang. No-reference quality assessment for multiply-distorted images in gradient domain. <i>IEEE Signal Processing Letters</i>, 23(4):541-545, 2016. [ <a href="https://ieeexplore.ieee.org/document/7423683">paper</a>, <a href="http://www.ntu.edu.sg/home/wslin/Publications.htm">implementation</a> ]
+<br>
+[<i>Gu2017TCB</i>] Ke Gu, Jun Zhou, Jun-Fei Qiao, Guangtao Zhai, Weisi Lin, and Alan Conrad Bovik. No-reference quality assessment of screen content pictures. <i>IEEE Transactions on Image Processing</i>, 26(8):4005-4018, 2017. [ <a href="https://ieeexplore.ieee.org/document/7938348">paper</a>, <a href="https://sites.google.com/site/guke198701/publications">implementation</a> ]
+<br>
+[<i>Xiang2020TMM</i>] Tao Xiang, Ying Yang, and Shangwei Guo. Blind night-time image quality assessment: Subjective and objective approaches. <i>IEEE Transactions on Multimedia</i>, 22(5):1259-1272, 2019. [ <a href="https://ieeexplore.ieee.org/document/8821407">paper</a>, <a href="https://drive.google.com/file/d/19_ZakZ4qTgSfrHG6IIg7uZn8JHi21fKi/view?usp=share_link">implementation</a> ]
+<br>
+[<i>Wang2021ICME</i>] Miaohui Wang, Yijing Huang, and Jialin Zhang. Blind Quality Assessment of Night-Time Images Via Weak Illumination Analysis. In <i>IEEE International Conference on Multimedia &amp; Expo (ICME)</i>, pages 1-6, 2021. [ <a href="https://ieeexplore.ieee.org/document/9428097">paper</a>, <a href="https://drive.google.com/file/d/1-hHaKl9b59AaU4tOrS4uHvM7q6CcYR5z/view?usp=share_link">implementation</a> ]
+<br>
+[<i>Wang2022TII</i>] Miaohui Wang, Yijing Huang, Jian Xiong, and Wuyuan Xie. Low-light Images In-the-wild: A Novel Visibility Perception-guided Blind Quality Indicator. <i>IEEE Transactions on Industrial Informatics</i>, 1(1):1-1, 2022. [ <a href="https://ieeexplore.ieee.org/abstract/document/9772414">paper</a>, <a href="https://drive.google.com/file/d/1-hHaKl9b59AaU4tOrS4uHvM7q6CcYR5z/view?usp=share_link">implementation</a> ]
+<br>
+[<i>Kang2014CVPR</i>] Le Kang, Peng Ye, Yi Li, and David Doermann. Convolutional neural networks for no-reference image quality assessment. In <i>IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</i>, pages 1733-1740, 2014. [ <a href="https://openaccess.thecvf.com/content_cvpr_2014/html/Kang_Convolutional_Neural_Networks_2014_CVPR_paper.html">paper</a>, <a href="https://github.com/lllllllllllll-llll/CNNIQA_LeKang">implementation</a> ]
+<br>
+[<i>Bosse2018TIP</i>] Sebastian Bosse, Dominique Maniry, Klaus-Robert M¨uller, Thomas Wiegand, and Wojciech Samek. Deep neural networks for no-reference and full-reference image quality assessment. <i>IEEE Transactions on Image Processing</i>, 27(1):206-219, 2018. [ <a href="https://ieeexplore.ieee.org/document/8063957">paper</a>, <a href="https://github.com/dmaniry/deepIQA">implementation</a> ]
+<br>
+[<i>Ke2021ICCV</i>] Junjie Ke, Qifei Wang, Yilin Wang, Peyman Milanfar, and Feng Yang. MUSIQ: Multi-scale image quality transformer. In <i>IEEE International Conference on Computer Vision (ICCV)</i>, pages 5148-5157, 2021. [ <a href="https://openaccess.thecvf.com/content/ICCV2021/html/Ke_MUSIQ_Multi-Scale_Image_Quality_Transformer_ICCV_2021_paper.html">paper</a>, <a href="https://github.com/anse3832/MUSIQ">implementation</a> ]
+<br>
+[<i>Ying2020CVPR</i>] Zhenqiang Ying, Haoran Niu, Praful Gupta, Dhruv Mahajan, Deepti Ghadiyaram, and Alan C. Bovik. From patches to pictures (PaQ-2-PiQ): Mapping the perceptual space of picture quality. In <i>IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</i>, pages 3575-3585, 2020. [ <a href="https://openaccess.thecvf.com/content_CVPR_2020/html/Ying_From_Patches_to_Pictures_PaQ-2-PiQ_Mapping_the_Perceptual_Space_of_CVPR_2020_paper.html">paper</a>, <a href="https://github.com/baidut/PaQ-2-PiQ">implementation</a> ]
+<br>
+[<i>Kim2019TNNLS</i>] Jongyoo Kim, Anh-Duc Nguyen, and Sanghoon Lee. Deep CNN-based blind image quality predictor. <i>IEEE Transactions on Neural Networks and Learning Systems</i>, 30(1):11-24, 2019. [ <a href="https://ieeexplore.ieee.org/document/8383698">paper</a>, <a href="https://github.com/lllllllllllll-llll/DIQA">implementation</a> ]
+<br>
+[<i>Yan2019TMM</i>] Bo Yan, Bahetiyaer Bare, and Weimin Tan. Naturalness-aware deep no-reference image quality assessment. <i>IEEE Transactions on Multimedia</i>, 21(10):2603-2615, 2019. [ <a href="https://ieeexplore.ieee.org/document/8666733">paper</a>, <a href="https://github.com/lllllllllllll-llll/NSSADNN_IQA">implementation</a> ]
+<br>
+[<i>Zhang2020TCSVT</i>] Weixia Zhang, Kede Ma, Jia Yan, Dexiang Deng, and Zhou Wang. Blind image quality assessment using a deep bilinear convolutional neural network. <i>IEEE Transactions on Circuits and Systems for Video Technology</i>, 30(1):36-47, 2020. [ <a href="https://ieeexplore.ieee.org/document/8576582">paper</a>, <a href="https://github.com/zwx8981/DBCNN-PyTorch">implementation</a> ]
+<br>
+[<i>Wu2020TIP</i>] Jinjian Wu, Jupo Ma, Fuhu Liang, Weisheng Dong, Guangming Shi, and Weisi Lin. End-to-end blind image quality prediction with cascaded deep neural network. <i>IEEE Transactions on Image Processing</i>, 29(1):7414-7426, 2020. [ <a href="https://ieeexplore.ieee.org/document/9121773">paper</a>, <a href="https://web.xidian.edu.cn/wjj/paper.html">implementation</a> ]
+<br>
+[<i>Li2020ACMMM</i>] Dingquan Li, Tingting Jiang, and Ming Jiang. Norm-in-norm loss with faster convergence and better performance for image quality assessment. In <i>ACM International Conference on Multimedia (MM)</i>, pages 789-797, 2020. [ <a href="https://dl.acm.org/doi/abs/10.1145/3394171.3413804">paper</a>, <a href="https://github.com/lidq92/LinearityIQA">implementation</a> ]
+<br>
+[<i>Su2020CVPR</i>] Shaolin Su, Qingsen Yan, Yu Zhu, Cheng Zhang, Xin Ge, Jinqiu Sun, and Yanning Zhang. Blindly assess image quality in the wild guided by a self-adaptive hyper network. In <i>IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</i>, pages 3667-3676, 2020. [ <a href="https://openaccess.thecvf.com/content_CVPR_2020/html/Su_Blindly_Assess_Image_Quality_in_the_Wild_Guided_by_a_CVPR_2020_paper.html">paper</a>, <a href="https://github.com/SSL92/hyperIQA">implementation</a> ]
+<br>
+[<i>Zhu2020CVPR</i>] Hancheng Zhu, Leida Li, Jinjian Wu, Weisheng Dong, and Guangming Shi. MetaIQA: Deep meta-learning for no-reference image quality assessment. In <i>IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</i>, pages 14143-14152, 2020. [ <a href="https://openaccess.thecvf.com/content_CVPR_2020/html/Zhu_MetaIQA_Deep_Meta-Learning_for_No-Reference_Image_Quality_Assessment_CVPR_2020_paper.html">paper</a>, <a href="https://github.com/zhuhancheng/MetaIQA">implementation</a> ]
+<br>
+[<i>Ma2021ACMMM</i>] Rui Ma, Hanxiao Luo, Qingbo Wu, King Ngi Ngan, Hongliang Li, Fanman Meng, and Linfeng Xu. Remember and Reuse: Cross-Task Blind Image Quality Assessment via Relevance-aware Incremental Learning. In <i>ACM International Conference on Multimedia (MM)</i>, pages 5248-5256, 2021. [ <a href="https://dl.acm.org/doi/abs/10.1145/3474085.3475642">paper</a>, <a href="https://github.com/maruiperfect/R-R-Net">implementation</a> ]
+<br>
+[<i>Zhang2021TIP</i>] Weixia Zhang, Kede Ma, Guangtao Zhai, and Xiaokang Yang. Uncertainty-aware blind image quality assessment in the laboratory and wild. <i>IEEE Transactions on Image Processing</i>, 30(1):3474-3486, 2021. [ <a href="https://ieeexplore.ieee.org/document/9369977">paper</a>, <a href="https://github.com/zwx8981/UNIQUE">implementation</a> ]
+<br>
+[<i>Zhang2022TPAMI</i>] Weixia Zhang, Dingquan Li, Chao Ma, Guangtao Zhai, Xiaokang Yang, and Kede Ma. Continual learning for blind image quality assessment. <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>, 1(1):1-1, 2022. [ <a href="https://ieeexplore.ieee.org/abstract/document/9784904">paper</a>, <a href="https://github.com/zwx8981/BIQA_CL">implementation</a> ]
+<br>
+[<i>Liu2019TPAMI</i>] Xialei Liu, Joost Van De Weijer, and Andrew D Bagdanov. Exploiting unlabeled data in CNNs by self-supervised learning to rank. <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>, 41(8):1862-1878, 2019. [ <a href="https://ieeexplore.ieee.org/document/8642842">paper</a>, <a href="https://github.com/xialeiliu/RankIQA">implementation</a> ]
+<br>
+[<i>Wang2022ACMMM</i>] Miaohui Wang, Zhuowei Xu, Yuanhao Gong, and Wuyuan Xie. S-CCR: Super-Complete Comparative Representation for Low-Light Image Quality Inference In-the-wild. In <i>ACM International Conference on Multimedia (MM)</i>, pages 5219-5227, 2022. [ <a href="https://dl.acm.org/doi/abs/10.1145/3503161.3548083">paper</a>, <a href="https://drive.google.com/file/d/10kRrgY1Pym13juVf-iTuiICByYr7LTKy/view?usp=share_link">implementation</a> ]
+<br>
+[<i>Madhusudana2022TIP</i>] Pavan C Madhusudana, Neil Birkbeck, Yilin Wang, Balu Adsumilli, and Alan C Bovik. Image quality assessment using contrastive learning. <i>IEEE Transactions on Image Processing</i>, 31(1):4149-4161, 2022. [ <a href="https://ieeexplore.ieee.org/document/9796010">paper</a>, <a href="https://github.com/pavancm/CONTRIQUE">implementation</a> ]
+
+
+
+
+<br>
+<br>
+<hr align="center" size="2" width="100%">
+<!-- Start of CuterCounter Code -->
+<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=tt&d=XQzdCPhOcp1cWiDF9FcCiysYiJL0pqS3ORXKLbHtc4g&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353'></script>
+<!-- End of CuterCounter Code -->
+
+
+
+ </body></html>
