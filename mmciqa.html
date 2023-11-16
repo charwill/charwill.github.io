@@ -1,0 +1,308 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <script src="./mmciqa_files/MathJax.js.download" async=""></script>
+    <title>Visual Quality Assessment of Composite Images: Compression-oriented Database and Measurement</title>
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style>
+<style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style>
+<style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style>
+<style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style></head>
+
+<body><div id="MathJax_Message" style="display: none;"></div>
+
+<center><h1>Visual Quality Assessment of Composite Images: Compression-oriented Database and Measurement</h1></center>
+
+<center><h3> Miaohui Wang et al. </h3></center>
+
+
+
+<hr><a name="Abstract"><b>Abstract</b></a>
+
+<br> Composite images (CIs) have experienced unprecedented growth, especially with the prosperity of a large number of generative AI technologies. They are usually created by combining multiple visual elements from different sources to form a single cohesive composition, which have an increasing impact on a variety of vision applications. However, the transmission of CIs can degrade their visual quality, especially undergoing lossy compression to reduce bandwidth and storage. To facilitate the development of objective measurements for CIs and investigate the influence of compression distortions on their perception, we establish a compression-oriented image quality assessment (CIQA) database for CIs (called ciCIQA) with 30 typical encoding distortions. Compressed with six representative codecs, we have carried out a large-scale subjective experiment that delivered 3000 encoded CIs with manually labeled quality scores, making ciCIQA one of the earliest CI databases with the most compression types. ciCIQA enables us to explore the encoding effect on consecutive visual quality from the first five just noticeable difference (JND) points, offering insights for perceptual CI compression and related tasks. Moreover, we have proposed a new multi-masked blind CIQA method (called mmCIQA), including a multi-masked quality representation module, a self-supervised quality alignment module, and a multi-masked attentive fusion module. Experimental results demonstrate the outstanding performance of our mmCIQA in assessing the quality of CIs, outperforming 17 competitive approaches. The proposed method and database as well as the collected objective metrics are made publicly available on https://charwill.github.io/xxxx.html.
+
+
+<script type="text/javascript">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['',''], ['\\(','\\)']]
+      }
+    });
+  </script>
+
+<!-- 5756 x 2529 -->
+<p></p><div style="text-align: center;">
+<img src="./mmciqa_files/home_application.png" width="1066" height="466" style="margin: 0 auto;">
+<br><b>Fig.1: Typical applications of compression-oriented composite images.</b>
+</div><p></p>
+
+
+<hr><a name="Download"><b>Download</b></a>
+<br>
+[<a href="https://docs.google.com/presentation/d/1OscQtAVM0vmRgo8vqNrYFEDCFL5m9qJQ50rrtxixkHY/edit?usp=drive_link"><b>ciCIQA Database</b></a>] 
+[<a href="https://docs.google.com/presentation/d/1OscQtAVM0vmRgo8vqNrYFEDCFL5m9qJQ50rrtxixkHY/edit?usp=drive_link"><b>mmCIQA Method</b></a>]
+<br>
+
+
+
+
+
+<hr><a name="ciCIQA Database"><b>PROPOSED ciCIQA DATABASE</b></a>
+
+<p> We introduce how to build our ciCIQA database, which includes the following four steps: (1) data preparation and generation of compressed CI samples, (2) annotation of compressed CI samples, (3) processing of subjective results, and (4) statistical analysis of ciCIQA.
+
+
+
+
+</p><p></p><div style="text-align: center;">
+<!-- 1864 x 576 -->
+<b> Table.1: Comparison of some mainstream IQA databases and the proposed ciCIQA. </b>
+<br> <img src="./mmciqa_files/TAB_Database_Comparison.png" width="1400" height="400">
+</div><p></p>
+
+
+<p>
+<b> (1) Data Preparation and Generation. </b>
+</p><p> 
+<b> (1.1) Preparation of Raw CIs. </b>
+We have collected and selected 100 representative CI source samples from different application scenarios, including generative AI, web design, video conference, poster design, medical image analysis, autonomous driving, security monitoring, e-sports, etc. Subsequently, we proportionally crop them into a resolution of 1920x1080 to ensure that they have the same size for the convenience of conducting subjective experiments. Based on their characteristics, we have summarized four main attributes such as multi-element, multi-scene, multi-style, and multiview, as shown in Fig.2.
+</p><p> a) <b>Multi-element.</b> Fusing various content styles (natural images, computer graphics, and cartoons) or content components (icons, text, lines, and charts) to create meaningful and engaging image content, which is commonly used in film posters, magazine covers, and web pages. </p>
+<p> b) <b>Multi-scene.</b> Integrating various scenes or backgrounds (natural, urban, and cosmic), as well as different time and space dimensions (micro, macro, past, and present), to create diverse and rich image content, which is commonly seen in digital art, virtual reality, and TV broadcasting.
+</p><p> c) <b>Multi-style.</b> Combining different artistic styles (comics, abstract, and realism) or various artistic effects (filters, lighting, and shadow) to create unique and fantastical image content, which is commonly found in advertising, social media (i.e., UGC), and AIGC.
+</p><p> d) <b>Multi-view.</b> Integrating different perspectives or viewpoints (front, side, and top-down), and various modalities or dimensions (infrared images, depth maps, and point clouds) to provide a more comprehensive image representation of the target scenes or objects, which is commonly found in surveillance, e-sports, and autonomous driving.
+</p><p> These distinct attributes make the quality assessment of CIs more complex and challenging.
+
+
+<!-- 1859 x 491 -->
+</p><p></p><div style="text-align: center;">
+<img src="./mmciqa_files/FIG_Statistical_Properties.png" width="1240" height="327" style="margin: 0 auto;">
+<br><b> Fig.2: Comparison of statistical properties between natural and composite images. </b>
+</div><p></p>
+
+    
+<p> We provide some statistical data on our ciCIQA database, as shown in Fig.3. The diversity of images is measured in terms of spatial information and colorfulness. The top provides the scatter plot of the spatial information and colorfulness of ciCIQA. As seen, the scatter is distributed across the entire range, which indicates the composition of our database samples is reasonable. The bottom presents the statistical proportion of different applications. As seen, the raw data of ciCIQA comes from more than 15 application scenarios. Therefore, we believe that the collected images can well represent the overall space of CIs.
+
+
+
+
+</p><p></p><div style="text-align: center;">
+<!-- 1646 x 791 -->
+<img src="./mmciqa_files/SI_CF-eps-converted-to.png" width="823" height="396">
+<br> (a) The scatter plot of spatial information (or content diversity) and colorfulness
+<!-- 1759 x 708 -->
+<br> <img src="./mmciqa_files/images_application_sort.png" width="880" height="354">
+<br> (b) The statistical proportion of images that comes from each application scenario in a sunburst chart
+<br><b> Fig.3: Statistical properties of the proposed ciCIQA database. </b>
+</div><p></p>
+    
+
+
+<p>
+<b> (1.2) Generation of Compressed CI Samples.</b>
+To generate compressed CI samples with various encoders, we employ four video compression standards (e.g., A V1, H.264/A VC, H.265/HEVC, and H.266/VVC) and two widely-used image compression standards (e.g., JPEG and WebP). Among them, H.266/VVC is the latest video coding standard. The detailed compression settings are summarized as follows:
+</p><p> a) <b>AV1.</b> We utilize the libaom-av1 encoder in FFmpeg 4.2.4 for A V1 encoding. The encoding command is set as: <i>"ffmpeg -s 1920x1080 -pix fmt yuv420p -i input file c:v libaom-av1 -crf xx -b:v 0 output file"</i>, where <i>-s</i> refers to the resolution of the output file, <i>-c:v</i> specifies the video encoding library is libaom-av1, and <i>-crf</i> refers to the constant rate factor (CRF), which is the quality control parameter. The CRF value (i.e., denoted by <i>"xx"</i>) is adjustable within the range of 0 to 63, where selecting lower values leads to enhanced video quality but larger file sizes.
+</p><p> b) <b>H.264/AVC.</b> Similar to AV1, we use libx264 in FFmpeg 4.2.4 for H.264 encoding. The encoding command is set as: <i>"ffmpeg -s 1920x1080 -pix fmt yuv420p -i input file c:v libx264 -qp xx output file"</i>, where <i>-qp</i> represents the quantization parameter (QP). QP serves as the quality control factor, and it accepts a value ranging from 0 to 51 in the experiments.
+</p><p> c) <b>H.265/HEVC.</b> We employ the libx265 in FFmpeg 4.2.4 for H.265 encoding. Similar to H.264, the encoding command is set as: <i>"ffmpeg -s 1920x1080 -pix fmt yuv420p -i input file -c:v libx265 -qp xx output file"</i>.
+</p><p> d) <b> H.266/VVC.</b> We use VTM 14.2 and the main profile for H.266 encoding with the same quality control parameters as H.264. The related encoding command is set as: <i>"EncoderApp.exe -c encoder intra vtm.cfg -i input file -q xx -o output file -b bin file"</i>, where <i>-c</i> specifies the configuration file as encoder intra vtm.cfg.
+</p><p> e) <b> JPEG.</b> The MATLAB function <i>"imwrite"</i> implements the JPEG compression. The compressed images at different quality levels are controlled by quality factor (QF), which can be adjusted within the range of 0 to 100. A larger QF value means a better quality, and vice versa.
+</p><p> f) <b> WebP.</b> We employ the libwebp in FFmpeg 4.2.4 for WebP encoding. The encoding command is set as: <i>"ffmpeg -s 1920x1080 -pix fmt yuv420p -i input file -c:v libwebp -quality output file"</i>, where <i> -quality</i> denotes a QF parameter used to control the compression quality, with values ranging from 0 to 100.
+
+
+</p><p> As is well known, when QP or CRF is too small (i.e., QF is too large), the quality difference between the compressed and original images is almost indistinguishable. In contrast, when QP or CRF is too large (QF is too small), the visual quality of a compressed image can be very annoying. Based on the prior experience, we set the QP and CR values range between 23 and 47, and the QF value ranges between 5 and 70 to save labor costs, respectively. Consequently, a total of 23200 compressed images are generated for subjective experiments.
+
+
+
+</p><p>
+<b> (2) Annotation of Compressed CI Samples. </b>
+</p><p> Existing studies have shown that human perceptual quality can be represented as a step function of QPs, where perceived quality remains constant between two adjacent perceptual quality jump points (i.e., JND points). In other words, they can be used to guide an encoder to select the maximum QP that ensures the compressed image belongs to the same visual quality level. Therefore, when manually annotating the compressed CI samples, it is of great significance to determine the best jump point that human eyes can not distinguish the difference between two QPs with the largest gap.
+
+
+</p><p> <b>(2.1) Annotating Just Noticeable Difference (JND).</b>
+To annotate consecutive visual quality, we have conducted subjective experiments to annotate the first five JND points for each CI sample, and the overall settings are similar to [Wang2016JVCIR]. Specifically, we have employed a double stimulus and designed a graphical user interface for the JND subjective experiments. We have invited 20 participants (9 females and 11 males with no background in image processing) to compare two images displayed side by side. Participants are asked to select "Yes" or "No" to indicate whether there is a quality difference between two juxtaposed images. Considering the limited number of testing images and time constraints, we employed a binary search method to expedite the search for the jump points. Table II summarizes the main information about the experimental conditions and parameter configurations.
+
+
+
+
+</p><p></p><div style="text-align: center;">
+<!-- 625 x 466 -->
+<img src="./mmciqa_files/curve_JND_JPEG_PSNR.png" width="312" height="233">
+<img src="./mmciqa_files/curve_JND_H.266_PSNR.png" width="312" height="233">
+<br> <b> Fig.4: Illustration of consecutive quality levels and the first five perceptual jump points of JPEG and H.266/VVC. The blue dot line represents the quality curve, and the orange solid line represents a step function of the related jump points on our ciCIQA.</b>
+</div><p></p>
+
+
+<p></p><div style="text-align: center;">
+<!-- 1251 x 448 -->
+<img src="./mmciqa_files/distortion_level.png" width="625" height="224">
+<br> <b> Fig.5:  Distribution of different visual quality levels. The average quantization value is calculated for each compression standard. To ensure the consistency of illustrations, we subtract the relevant quantization value (i.e., QF) from 100 in JPEG and AV1.</b>
+</div><p></p>
+
+
+
+<p> <b>(2.2) Annotating Visual Quality Score (VQS):</b>
+To annotate the visual quality scores (VQSs) for each CI sample at five jump points, we further employ a single stimulus and design a graphical user interface to carry out the subjective experiments. Specifically, we have invited 21 participants including 12 females and 9 males. Each subject is asked to score the image quality based on 11 discrete quality scores ranging from 0 to 1 with a step length of 0.1, which corresponds to five quality levels (i.e., [0,0.1] for bad, [0.2,0.3] for poor, [0.4,0.5] for fair, [0.6,0.7] for good, and [0.8,1.0] for excellent, as suggested in [ITU2020]). Other details are provided in Table II.
+
+
+
+</p><p></p><div style="text-align: center;">
+<!-- 1334 x 567 -->
+<img src="./mmciqa_files/Overall_histogram.png" width="667" height="284">
+<br> <b> Fig.6: Histogram of the MOS values on our ciCIQA database.</b>
+</div><p></p>
+
+
+
+<p></p><div style="text-align: center;">
+<!-- 1334 x 567 -->
+<br> <img src="./mmciqa_files/confidence_interval.png" width="667" height="284">
+<br> <b> Fig.7:  Histogram of the confidence interval for subjective ratings on our ciCIQA database. </b>
+</div><p></p>
+
+
+
+<p>
+<b> (3) Processing of Subjective Experimental Results. </b>
+</p><p> To ensure the validity of the subjective experimental data, we have performed the outlier detection and the observer rejection before using the annotated samples obtained from two subjective experiments. For the JND subjective experiments, we use the same outlier detection method as suggested in [Shen2021TIP].
+
+
+</p><p> For the VQS subjective experiments, we calculate the confidence interval of the VQS results at the confidence level of 95% [46]. In particular, we obtain the mean <i>µ</i> and the standard deviation <i>δ</i> of all subjective results. For example, the confidence interval of the i-th CI sample is defined as , where Nob denotes denotes the total number of observers. If the subjective label exceeds the corresponding confidence interval, the related annotation is considered as an outlier. When the number of outliers for a subject exceeds a certain threshold (i.e., 18 in our experiments), all the annotations from that subject are discarded as suggested in [Xiang2020TMM]. Based on the above outlier processing, two subjects were rejected in our experiments.
+
+
+
+</p><p>
+<b> (4) Statistical Analysis of ciCIQA. </b>
+</p><p> The HVS prior knowledge tells us that human eyes barely discern subtle compression distortion differences. To improve the compression efficiency, we can encode a CI sample with the maximum QP between two adjacent jump points. We calculate the average results of the first five jump points on our ciCIQA database, and show the statistical results of JPEG and H.266/VVC in Fig.4. The blue dotted line represents the compression distortion in terms of signal distortion, while the red solid line represents the compression distortion in terms of perceptual distortion. As seen, HVS can perceive the consecutive quality level over discrete QPs from lossless to severe signal distortion. It also reveals that we can choose more suitable encoding parameters (i.e., QP) under the same perceptual quality to reduce storage and bandwidth requirements.
+
+
+Fig.5 provides the distribution of visual quality levels for six different encoders. Based on this statistical distribution, we have observed an interesting consistent trend: as the perceptual quality level gradually decreases (i.e., higher visual quality), the change rate of quantization value progressively increases. In other words, when the image quality increases to a certain level, it is difficult for human eyes to detect changes in finer details. The fundamental reason behind this trend is that HVS has limited resolutions, because it can be affected by physiological structure (e.g., retina cell types and quantity) and cognitive process (e.g., knowledge and experience). These statistics provide valuable insights that help us better understand and achieve a balance between image quality and compression ratio, showing useful guidance for the development of composite image compression.
+
+
+Fig. 6 provides the distribution of MOSs, covering the entire range of visual quality. It demonstrates that ciCIQA includes a diverse set of compression distortion samples across various quality levels, and the boundaries between different quality levels are also easily discernible. Furthermore, upon closer inspection, the histogram of the MOS values shows five distinct peaks, which is consistent with the construction strategy in our database, where the distortion level is determined by the first five JND points.
+
+
+
+Furthermore, we have validated the consistency among all subjects by calculating their mean and standard deviation of the rating scores and maintaining a confidence level of 95% [ITU2020]. As illustrated in Fig. 7, we report the lengths of the confidence interval for subjective ratings of all images. As seen, these confidence interval lengths are primarily distributed between 0.10 and 0.21. This suggests that there is a high level of consistency among the subjective ratings in our ciCIQA. As a result, the MOS results obtained from the subjective experiments are reliable for the CIQA task
+
+
+
+</p><hr><a name="Multi-masked quality assessment"><b>MULTI-MASKED QUALITY ASSESSMENT</b></a>
+<p> Existing compression standards typically adopt a block-level coding paradigm, dividing the input image into no-overlapping blocks and encoding them separately. The compression process for each block is similar, and all decoded blocks contribute to the image-level quality experience. As a result, we believe that the characteristics of compression distortion can be effectively captured at the block level.
+
+Inspired by this, we propose a new multi-masked noreference CIQA metric, where we focus on extracting quality relationship features between different blocks through randomly masking and learning the encoding distortion features at the block level. mmCIQA mainly consists of three modules, including 1) multi-masked quality representation, 2) selfsupervised quality alignment, and 3) multi-masked attentive fusion as shown in Fig. 8.
+
+
+
+
+</p><p></p><div style="text-align: center;">
+<!-- 3330 x 1005 -->
+<img src="./mmciqa_files/framework_qa_learning.png" width="832" height="250">
+<br> <b> Fig.8: Pipeline of the proposed multi-masked CIQA model (i.e., mmCIQA). </b>
+</div><p></p>
+
+
+<p>
+<b> (1) Multi-masked Quality Representation. </b>
+</p><p> Multi-masked quality representation aims to learn CI features to describe their perceived compression quality. In  general, the content variations of each image block and different encoders result in different perceptual visual quality. It indicates that compression distortions appeared in each block tend to be relatively independent. On the other hand, the compression quality of each block jointly affects the visual quality of an entire image. To better represent the compression quality features, we design a task to learn from randomly masked CI images. Through this task, we aim to guide a trained model to learn the characteristics of the compression distortion within a block and the quality relationship between different blocks, as illustrated in Fig. 9.
+
+
+
+</p><p></p><div style="text-align: center;">
+<!-- 2126 x 886 -->
+<img src="./mmciqa_files/framework_feature_extraction.png" width="530" height="221">
+<br> <b> Fig.9:  Illustration of multi-masked quality representation. </b>
+</div><p></p>
+
+
+
+
+<p>
+<b> (2) Self-supervised Quality Alignment. </b>
+</p><p> Compression distortions demonstrate subtle differences, posing a challenge for the aforementioned reconstruction task to learn the quality representation of CIs. In order to better represent the quality differences on different encoders (e.g., JPEG, A V1, and H.266/VVC) and different compression settings (e.g., QPs), we design a self-supervised quality alignment method as follows.
+
+</p><p> Specifically, we adopt a self-supervised triplet feature metric to measure the feature difference, including compression-based hard contrast, content-based hard contrast, and block region-based soft contrast. Given X^{i,j} from the i-th compression operation (e.g., parameter settings and encoder types) and the j-th original CI sample, the corresponding k-th feature is f^{i,j}_k = <i>F_enc</i>(˜X^{i,j}_k; <i>θ_enc</i>). Furthermore, we employ a spatial average pooling AvgPool2D followed with one 1x1 convolution Conv to obtain 128-dimensional aligned features ˆf^{i,j}_k.
+
+    
+<p>
+<b> (3) Multi-masked Attentive Fusion. </b>
+</p><p> Considering that the block location also affects visual perception, we need to preserve the latent spatial location of feature elements when integrating multi-masked features. Therefore, we propose a multi-masked attentive fusion method, which integrates all features by a masking-based spatial position embedding and a cross-attentive fusion.
+
+
+
+<hr><a name="Experimental results and Analysis"><b>EXPERIMENTAL RESULTS AND ANALYSIS</b></a>
+Table.2 provides the overall experimental results of all 18 methods on our benchmark database ciCIQA. The last line provides the experimental results of mmCIQA denoted as "Proposed". From the experimental results, it can be seen that handcrafted methods are not suitable for evaluating the quality of CIs, as these IQAs are usually designed for NIs. These handcrafted features face difficulties in representing the quality of CIs, reflecting the urgent need to develop a compression-oriented quality metric. Additionally, it is also seen that deep learning-based IQAs outperform the handcrafted methods. The main reason is that learning-based IQAs can automatically extract more effective
+feature representations. 
+
+Finally, we further see that our mmCIQA has little performance difference on AV1, H.264/AVC, H.265/HEVC, H.266/VVC, JPEG, WebP, and the entire database. This indicates that the proposed method is less affected by different encoding standards and can provide reliable objective quality forecasting for CIs in a relatively stable manner.
+
+
+
+
+<p></p><div style="text-align: center;">
+<!-- 1700 x 782 -->
+<b> Table.2: Performance comparison of some representative QA methods. </b>
+<br> <img src="./mmciqa_files/TAB_Performance_Comparison.png" width="1360" height="600">
+</div><p></p>
+
+
+
+<p></p><hr><a name="References"><b>References</b></a>
+<br>
+[Wang2016JVCIR] Haiqiang Wang, Ioannis Katsavounidis, Jiantong Zhou, Jeong-Hoon Park, Shawmin Lei, Xin Zhou, Man-On Pun, Xin Jin, Ronggang Wang, Xu Wang, Yun Zhang, Jiwu Huang, Sam Kwong, and C.-C. Jay Kuo. VideoSet: A large-scale compressed video quality dataset based on JND measurement. <i>Journal of Visual Communication and Image Representation</i>, 46(1):292-302, 2017.
+<br>
+[ITU2020] ITU-R BT. Methodologies for the subjective assessment of the quality of television images, <i>document Recommendation ITU-R BT.500-14 (10/2019)</i>, ITU, Geneva, Switzerland, 2020.
+<br>
+[Shen2021TIP] Xuelin Shen, Zhangkai Ni, Wenhan Yang, Xinfeng Zhang, Shiqi Wang, and Sam Kwong. Just noticeable distortion profile inference: A patch-level structural visibility learning approach. <i>IEEE Transactions on Image Processing</i>, 30(1):26-38, 2021.
+<br>
+[Xiang2020TMM] Tao Xiang, Ying Yang, and Shangwei Guo. Blind night-time image quality assessment: Subjective and objective approaches. <i>IEEE Transactions on Multimedia</i>, 22(5):1259-1272, 2020.
+<br>
+[Wang2004TIP] Zhou Wang, Alan C. Bovik, Hamid R. Sheikh, and Eero P. Simoncelli. Image quality assessment: from error visibility to structural similarity. <i>IEEE Transactions on Image Processing</i>, 13(4):600-612, 2004.
+<br>
+[Gu2016TMM] Ke Gu, Shiqi Wang, Huan Yang, Weisi Lin, Guangtao Zhai, Xiaokang Yang, and Wenjun Zhang. Saliency-guided quality assessment of screen content images. <i>IEEE Transactions on Multimedia</i>, 18(6):1098-1110, 2016.
+<br>
+[Ni2017TIP] Zhangkai Ni, Lin Ma, Huanqiang Zeng, Jing Chen, Canhui Cai, and Kai-Kuang Ma. ESIM: Edge similarity for screen content image quality assessment. <i>IEEE Transactions on Image Processing</i>, 26(10):4818-4831, 2017.
+<br>
+[Gu2018TVCG] Ke Gu, Junfei Qiao, Xiongkuo Min, Guanghui Yue, Weisi Lin, and Daniel Thalmann. Evaluating quality of screen content images via structural variation analysis. <i>IEEE Transactions on Visualization and Computer Graphics</i>, 24(10):2689-2701, 2017.
+<br>
+[Bosse2018TIP] Sebastian Bosse, Dominique Maniry, Klaus-Robert Muller, Thomas Wiegand, and Wojciech Samek. Deep neural networks for no-reference and full-reference image quality assessment. <i>IEEE Transactions on Image Processing</i>, 27(1):206-219, 2018.
+<br> 
+[Li2021MM] Yang Li, Shiqi Wang, Xinfeng Zhang, Shanshe Wang, Siwei Ma, and Yue Wang. Quality Assessment of end-to-end learned image compression: The benchmark and objective measure. ACM International Conference on Multimedia (MM), pp. 4297-4305, 2021.
+<br> 
+[Mittal2012TIP] Anish Mittal, Anush Krishna Moorthy, and Alan Conrad Bovik, No-reference image quality assessment in the spatial domain. <i>IEEE Transactions on Image Processing</i>, 21(12):4695-4708, 2012.
+<br> 
+[Liu2014SPIC] Lixiong Liu, Bao Liu, Hua Huang, and Alan Conrad Bovik. No-reference image quality assessment based on spatial and spectral entropies. <i>Signal Processing: Image Communication</i>, 29(8):856-863, 2014.
+<br> 
+[Li2016SPL] Qiaohong Li, Weisi Lin, and Yuming Fang. No-Reference quality assessment for multiply-distorted images in gradient domain. <i>IEEE Signal Processing Letters</i>, 23(4):541-545, 2016.
+<br>
+[Min2017TIP] Xiongkuo Min, Kede Ma, Ke Gu, Guangtao Zhai, Zhou Wang, and Weisi Lin. Unified blind quality assessment of compressed natural, graphic, and screen content images. <i>IEEE Transactions on Image Processing</i>, 26(11):5462-5474, 2017.
+<br>
+[Fang2019TCSVT] Yuming Fang, Rengang Du, Yifan Zuo, Wenying Wen, and Leida Li. Perceptual Quality assessment for screen content images by spatial continuity. <i>IEEE Transactions on Circuits and Systems for Video Technology</i>, 30(11):4050-4063, 2020.
+<br>
+[Kim2019TNNLS] Jongyoo Kim, Anh-Duc Nguyen, and Sanghoon Lee. Deep CNN-based blind image quality predictor. <i>IEEE Transactions on Neural Networks and Learning Systems</i>, 30(1):11-24, 2019.
+<br>
+[Su2020CVPR] Shaolin Su, Qingsen Yan, Yu Zhu, Cheng Zhang, Xin Ge, Jinqiu Sun, and Yanning Zhang. Blindly assess image quality in the wild guided by a self-adaptive hyper network. <i>IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</i>, pp. 3664-3673, 2020.
+<br>
+[Zhang2021TIP] Weixia Zhang, Kede Ma, Guangtao Zhai, and Xiaokang Yang. Uncertainty-aware blind image quality assessment in the laboratory and wild. <i>IEEE Transactions on Image Processing</i>, 30(1):3474-3486, 2021.
+<br>
+[Madhusudana2022TIP] Pavan C. Madhusudana, Neil Birkbeck, Yilin Wang, Balu Adsumilli, and Alan C. Bovik. Image quality assessment using contrastive learning. <i>IEEE Transactions on Image Processing</i>, 31(1):4149-4161, 2022.
+<br>
+[Qin2023AAAI] Guanyi Qin, Runze Hu, Yutao Liu, Xiawu Zheng, Haotian Liu, Xiu Li, and Yan Zhang. Data-efficient image quality assessment with attention-panel decoder. <i>AAAI Conference on Artificial Intelligence (AAAI)</i>, pp. 2091-2100, 2023.
+<br>
+[Sun2023JSTSP] Wei Sun, Xiongkuo Min, Guangtao Zhai, and Siwei Ma. Blind quality assessment for in-the-wild images via hierarchical feature fusion and iterative mixed database training.  <i>IEEE Journal of Selected Topics in Signal Processing</i>, 1(1):1-15, 2023.
+<br>
+
+
+<br>
+<br>
+<hr align="center" size="2" width="100%">
+<!-- Start of CuterCounter Code -->
+<script type="text/javascript" id="clustrmaps" src="file://cdn.clustrmaps.com/map_v2.js?d=DphxV4yLQeZrv3USGPJ3SslfkdDjn_Z8zWfPqGsqDlA"></script></body></html>
