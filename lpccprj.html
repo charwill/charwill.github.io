@@ -15,7 +15,7 @@
 <br>
 <p>
 With the widespread application of LiDAR sensors in autonomous driving, there is a growing need for efficient LiDAR point cloud compression (LPCC). LPCC plays a critical role in effectively managing the storage, transmission, and perception of the expanding volume of LiDAR point cloud (LPC) data. However, there has been a lack of comprehensive investigations specifically focused on LPCC methods. To bridge this gap, this paper presents a systematic survey and extensive evaluation of LPCCs, aiming to summarize recent progress and inspire future research in this field. Firstly, we provide a clear picture of LPCC fundamentals, including the latest LPC datasets, distinctive attributes, evaluation metrics, and data formats. Secondly, we conduct a comprehensive review and comparison of existing LPCCs, such as image-based, octree-based, deep-learned, and other task-driven approaches. Finally, we propose a task-driven LPCC framework to meet the unique requirements of various tasks in autonomous driving. Overall, this paper will contribute to a better understanding of LPCCs and provide insights for the further development of autonomous driving systems. The proposed framework, the collected LPCC methods, as well as evaluation metrics are made publicly available on https://charwill.github.io/lpccprj.html.
- </p>
+</p>
  
  
 <br>
@@ -30,7 +30,140 @@ With the widespread application of LiDAR sensors in autonomous driving, there is
 
 
 <br>
-<a name="Current challenge"><b>Update Soon (before 2023.12.31)</b></a> 
+<h2><a id="LiDAR_Point_Cloud_5"></a>LiDAR Point Cloud</h2>
+<p></p><center><img src="./lpccprj_files/LPC_SPC_DPC_Application.png" style="width:60%;height:30%"> </center><br>
+Fig. 1: Applications of Static Point Cloud (SPC), Dynamic Point Cloud (DPC), and dynamically-acquired LiDAR Point Cloud (LPC). Static point clouds (SPC) and dynamic point clouds (DPC) are primarily employed in applications related to human perception, such as 3D object display in arts and culture and real-time 3D telepresence . On the other hand, dynamically-acquired LiDAR point cloud (LPC) is mainly used for machine perception applications, specifically in robotics and autonomous driving.
+<p></p>
+<h2><a id="LiDAR_Point_CLoud_Dataset_11"></a>LiDAR Point CLoud Dataset</h2>
+
+
+
+
+<h3>32-beam LiDAR Sensor</h3>
+<p>【IJRR 2018】Paris Lille 3D <a href="https://arxiv.org/abs/1712.00032">[paper]</a> <a href="http://caor-mines-paristech.fr/fr/paris-lille-3d-dataset/">[data]</a></p>
+<p>【CVPR 2019】 SemanticKITTI<a href="https://arxiv.org/pdf/1904.01416.pdf">[paper]</a> <a href="http://semantic-kitti.org/dataset">[data]</a></p>
+<p>【CVPR 2020】 nuScenes<a href="https://openaccess.thecvf.com/content_CVPR_2020/papers/Caesar_nuScenes_A_Multimodal_Dataset_for_Autonomous_Driving_CVPR_2020_paper.pdf">[paper]</a> <a href="https://www.nuscenes.org/">[data]</a></p>
+<p>【ICRA 2021】 RELLIS-3D<a href="https://arxiv.org/pdf/2011.12954.pdf">[paper]</a> <a href="https://github.com/unmannedlab/RELLIS-3D">[data]</a></p>
+<p>【RA-L 2022】Panoptic nuScenes <a href="https://arxiv.org/abs/2109.13410">[paper]</a> <a href="https://www.nuscenes.org/panoptic">[data]</a></p>
+<p>【TIV 2023】 V2V4Real<a href="https://arxiv.org/pdf/2212.08273.pdf">[paper]</a> <a href="https://github.com/jinlong17/V2VLC">[data]</a></p>
+
+
+
+
+<h3>64-beam LiDAR Sensor</h3>
+<p>【CVPR 2012】KITTI <a href="https://www.cvlibs.net/publications/Geiger2012CVPR.pdf">[paper]</a> <a href="https://www.cvlibs.net/datasets/kitti/">[data]</a></p>
+<p>【CVPR 2019】 Argoverse <a href="https://openaccess.thecvf.com/content_CVPR_2019/papers/Chang_Argoverse_3D_Tracking_and_Forecasting_With_Rich_Maps_CVPR_2019_paper.pdf">[paper]</a> <a href="https://www.argoverse.org/">[data]</a></p>
+<p>【ICRA 2019】H3D <a href="https://arxiv.org/abs/2109.13410">[paper]</a> <a href="https://www.cvlibs.net/datasets/kitti-360/">[data]</a></p>
+<p>【ICRA 2020】A*3D <a href="https://arxiv.org/abs/2109.13410">[paper]</a> <a href="https://github.com/I2RDL2/ASTAR-3D">[data]</a></p>
+<p>【CVPR 2020】 Waymo Open<a href="https://arxiv.org/pdf/1912.04838.pdf">[paper]</a> <a href="http://www.waymo.com/open">[data]</a></p>
+<p>【CoRL 2021】Lyft L5 <a href="https://arxiv.org/abs/2006.14480">[paper]</a> <a href="https://woven.toyota/en/prediction-dataset">[data]</a></p>
+<p>【ITSC 2021】PixSet <a href="https://arxiv.org/pdf/2102.12010.pdf">[paper]</a> <a href="https://leddartech.com/solutions/leddar-pixset-dataset/">[data]</a></p>
+<p>【IJRR 2021】CADC <a href="https://arxiv.org/pdf/2001.10117.pdf">[paper]</a> <a href="http://usa.%20honda-ri.com/H3D">[data]</a></p>
+<p>【TPAMI 2022】KITTI 360 <a href="https://arxiv.org/abs/2109.13410">[paper]</a> <a href="https://www.cvlibs.net/datasets/kitti-360/">[data]</a></p>
+
+
+
+
+<h2><a id="LPCC_method_32"></a>LiDAR Point CLoud Compression Method</h2>
+<center><p><img src="./lpccprj_files/taxonomy.png" style="width:60%;height:40%"></p></center>
+<br>
+Fig. 2: A taxonomy for LiDAR point cloud compression (LPCC). The existing methods are classified into intra LPCC methods (including image-based, autoencoder-based, tree-based, and other methods) and inter ones (including video-based, motion-based, and tree-based methods).<p></p>
+<h3><a id="Intra_LPCC_35"></a>Intra LiDAR Point CLoud Compression</h3>
+
+<p><strong>Image-based</strong></p>
+<p>【RA-L 2019】A Novel Point Cloud Compression Algorithm Based on Clustering <a href="https://ieeexplore.ieee.org/document/8648155">[paper]</a></p>
+<p>【ICRA 2019】Point cloud compression for 3D LiDAR sensor using recurrent neural network with residual blocks <a href="https://ieeexplore.ieee.org/document/8794264">[paper]</a>  <a href="https://github.com/ChenxiTU/Point-cloud-compression-by-RNN">[code]</a></p>
+<p>【TCSVT 2022】Real-time scene-aware LiDAR point cloud compression using semantic prior representation <a href="https://ieeexplore.ieee.org/document/9690112">[paper]</a></p>
+<p>【ICRA2022】R-pcc: a baseline for range image-based point cloud compression <a href="https://arxiv.org/abs/2109.07717">[paper]</a> <a href="https://github.com/StevenWang30/R-PCC">[code]</a></p>
+<p>【IV 2022】3D Point Cloud Compression with Recurrent Neural Network and Image Compression Methods <a href="https://ieeexplore.ieee.org/document/9827270">[paper]</a> <a href="https://github.com/ika-rwth-aachen/Point-Cloud-Compression">[code]</a></p>
+<p>【CVPR 2022】RIDDLE: LiDAR Data Compression with Range Image Deep Delta Encoding <a href="https://arxiv.org/abs/2206.01738">[paper]</a></p>
+
+
+
+
+<p><strong>Tree-based</strong></p>
+<p>【Google’s Software】Draco <a href="https://github.com/google/draco">[code]</a><br></p>
+<p>【MPEG’s Software】G-PCC <a href="https://mpeg-pcc.org/index.php/publications/an-overview-of-ongoing-point-cloud-compression-standardization-activities-video-based-v-pcc-and-geometry-based-g-pcc/">[paper]</a> <a href="https://github.com/MPEGGroup/mpeg-pcc-tmc13">[code]</a></p>
+<p>【ICIP 2018】Intra-frame context-based octree coding for point-cloud geometry <a href="https://ieeexplore.ieee.org/document/8451802">[paper]</a></p>
+<p>【CVPR 2020】 OctSqueeze: Octree-structured entropy model for LiDAR compression <a href="https://arxiv.org/abs/2005.07178">[paper]</a> <a href="https://gitee.com/mindspore/models/tree/master/research/cv/OctSqueeze">[code]</a></p>
+<p>【ICIP 2021】Cylindrical coordinates for LiDAR point cloud compression <a href="https://ieeexplore.ieee.org/document/9506448">[paper]</a></p>
+<p>【CVPR2021】VoxelContext-Net: An Octree based Framework for Point Cloud Compression <a href="https://arxiv.org/abs/2105.02158">[paper]</a></p>
+<p>【VCIP 2022】Azimuth Adjustment Considering LiDAR Calibration for the Predictive Geometry Compression in G-PCC <a href="https://ieeexplore.ieee.org/document/10008828/">[paper]</a></p>
+<p>【ECCV 2022】Point Cloud Compression with Sibling Context and Surface Priors <a href="https://arxiv.org/abs/2205.00760">[paper]</a> <a href="https://github.com/zlichen/PCC-S">[code]</a></p>
+<p>【TPAMI 2022】Sparse tensor-based multiscale representation for point cloud geometry compression <a href="https://arxiv.org/abs/2111.10633">[paper]</a> <a href="https://github.com/NJUVISION/SparsePCGC">[code]</a></p>
+<p>【AAAI 2022】OctAttention: Octree-Based Large-Scale Contexts Model for Point Cloud Compression <a href="https://arxiv.org/abs/2202.06028">[paper]</a> <a href="https://github.com/zb12138/OctAttention">[code]</a></p>
+<p>【CVPR 2023】Efficient Hierarchical Entropy Model for Learned Point Cloud Compression <a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Song_Efficient_Hierarchical_Entropy_Model_for_Learned_Point_Cloud_Compression_CVPR_2023_paper.pdf">[paper]</a></p>
+<p>【AAAI 2023】OctFormer: Efficient Octree-Based Transformer for Point Cloud Compression with Local Enhancement <a href="https://ojs.aaai.org/index.php/AAAI/article/view/25121">[paper]</a></p>
+<p>【TCSVT 2023】Multiscale Latent-Guided Entropy Model for LiDAR Point Cloud Compression <a href="https://arxiv.org/abs/2209.12512">[paper]</a></p>
+
+
+
+
+<p><strong>Autoencoder-based</strong></p>
+<p>【RA-L 2019】PCT: Large-scale 3D point cloud representations via graph inception networks with applications to autonomous driving <a href="https://ieeexplore.ieee.org/document/8803525">[paper]</a></p>
+<p>【RA-L 2021】Deep compression for dense point cloud maps <a href="https://github.com/PRBonn/deep-point-map-compression">[paper]</a> <a href="https://github.com/PRBonn/deep-point-map-compression">[code]</a></p>
+<p>【CVPR 2022】 Density-preserving Deep Point Cloud Compression  <a href="https://ieeexplore.ieee.org/document/9880234/">[paper]</a> <a href="https://github.com/yunhe20/D-PCC">[code]</a></p>
+<p>【ICIG 2023】 Patch-Wise LiDAR Point Cloud Geometry Compression Based on Autoencoder <a href="https://link.springer.com/chapter/10.1007/978-3-031-46311-2_25">[paper]</a> <a href="https://github.com/HRN1024/PLPCGC">[code]</a></p>
+
+
+
+
+<p><strong>Other methods</strong></p>
+<p>【ICC 2021】Hybrid Point Cloud Semantic Compression for Automotive Sensors: A Performance Evaluation <a href="https://arxiv.org/pdf/2103.03819.pdf">[paper]</a></p>
+<p>【TCSVT 2022】 Real-time scene-aware LiDAR point cloud compression using semantic prior representation <a href="https://ieeexplore.ieee.org/document/9690112">[paper]</a></p>
+<p>【TII 2022】 A Task-Driven Scene-Aware LiDAR Point Cloud Coding Framework for Autonomous Vehicles <a href="https://ieeexplore.ieee.org/abstract/document/9944923">[paper]</a></p>
+<p>【ECCV 2022】Point Cloud Compression with Range Image-Based Entropy Model for Autonomous Driving <a href="https://link.springer.com/chapter/10.1007/978-3-031-20047-2_19">[paper]</a></p>
+<p>【TCSVT 2022】Layer-wise geometry aggregation framework for lossless LiDAR point cloud compression <a href="https://ieeexplore.ieee.org/document/9492138">[paper]</a></p>
+<p>【EDBT 2023】Density-Based Geometry Compression for LiDAR Point Clouds <a href="https://openproceedings.org/2023/conf/edbt/paper-25.pdf">[paper]</a><a href="https://github.com/RapidsAtHKUST/DBGC">[code]</a></p>
+
+
+
+
+
+<h3><a id="Inter_LPCC_117"></a>Inter LiDAR Point CLoud Compression</h3>
+<p><strong>Video-based</strong></p>
+<p>【IEEE Access 2019】Real-Time streaming point cloud compression for 3D LiDAR sensor using U-Net <a href="https://ieeexplore.ieee.org/document/8798629">[paper]</a></p>
+<p>【RA-L 2020】A Novel Coding Architecture for LiDAR Point Cloud Sequence <a href="https://ieeexplore.ieee.org/document/9143432">[paper]</a></p>
+<p>【MM 2020】An Advanced LiDAR Point Cloud Sequence Coding Scheme for Autonomous Driving <a href="https://dl.acm.org/doi/10.1145/3394171.3413537">[paper]</a></p>
+<p>【TBC 2022】Real-Time LiDAR Point Cloud Compression Using Bi-Directional Prediction and Range-Adaptive Floating-Point Coding <a href="https://ieeexplore.ieee.org/document/9745995">[paper]</a></p>
+<p>【TITS 2022】 A Novel Coding Architecture for Multi-Line LiDAR Point Clouds Based on Clustering and Convolutional LSTM Network <a href="https://ieeexplore.ieee.org/document/9254118">[paper]</a> <a href="https://github.com/Yunbo426/predrnn-pp">[code]</a></p>
+<p>【ICASSP 2023】BIRD-PCC: Bi-Directional Range Image-Based Deep LiDAR Point Cloud Compression <a href="https://arxiv.org/abs/2303.04027">[paper]</a></p>
+
+
+
+
+<p><strong>Tree-based</strong></p>
+<p>【NIPS 2020】MuSCLE:multi sweep compression of LiDAR using deep entropy models <a href="https://arxiv.org/abs/2011.07590">[paper]</a></p>
+<p>【NIPS 2021】VoxelContext-Net: An Octree based Framework for Point Cloud Compression <a href="https://arxiv.org/abs/2105.02158">[paper]</a></p>
+
+
+
+
+<p><strong>Motion-based</strong></p>
+<p>【IV 2017】Continuous point cloud data compression using SLAM based prediction <a href="https://ieeexplore.ieee.org/document/7995959">[paper]</a></p>
+<p>【TITS 2019】Motion analysis and performance improved method for 3D LiDAR sensor data compression <a href="https://ieeexplore.ieee.org/document/8924947">[paper]</a></p>
+<p>【IROS 2020】Real-Time Spatio-Temporal LiDAR Point Cloud Compression <a href="https://ieeexplore.ieee.org/document/9341071">[paper]</a> <a href="https://github.com/horizon-research/Real-Time-Spatio-Temporal-LiDAR-Point-Cloud-Compression">[code]</a></p>
+<p>【TASE 2021】A Novel Coding Scheme for Large-Scale Point Cloud Sequences Based on Clustering and Registration <a href="https://ieeexplore.ieee.org/document/9445395">[paper]</a></p>
+<p>【ICMEW 2021】An Improved Coarse-To-Fine Motion Estimation Scheme For LiDAR Point Cloud Geometry Compression <a href="https://ieeexplore.ieee.org/document/9456018">[paper]</a></p>
+<p>【IEEE Access 2022】LiDAR point cloud compression by vertically placed objects based on global motion prediction <a href="https://ieeexplore.ieee.org/document/9698207">[paper]</a></p>
+
+
+
+<h2><a id="Downstream_task_192"></a>Downstream Tasks</h2> 
+
+<p><strong>Localization performance.</strong> <a href="https://github.com/gisbi-kim/PyICP-SLAM">[code1]</a> , <a href="https://github.com/MichaelGrupp/evo">[code2]</a></p>
+<p></p><center><img src="./lpccprj_files/localization_results.jpg" style="width:60%;height:auto"></center><br>
+Fig. 2: Visualization of localization results on SemanticKITTI dataset. (a), (b), (c) and (d) correspond to the changes in the LiDAR sensor poses (including X, Y, Z, roll angle, pitch angle, and yaw angle) of sequences 11, 14, 15, and 18. Compared with the original LPCs, the pose of the LiDAR sensor estimated by reconstructed LPCs is closer to the ground truth in some segments, and the higher the BPP, the closer it is.<p></p>
+
+
+<p><strong>Mapping performance.</strong><a href="https://github.com/xxxx">[code]</a><br>
+</p><center><img src="./lpccprj_files/mapping_results.jpg" style="width:55%;height:auto"></center><br>
+Fig. 3: Visualization of mapping results on SemanticKITTI dataset. (a), (b), (c) and (d) are four segments of the map constructed from the original LPCs (upper part) and our reconstructed LPCs (lower part) of sequences 11, 14, 15, and 18.  The map constructed from the original LPCs includes movable objects that should not be present. Especially, the movable objects in (c) and (d) occupy most of the road and result in extensive ground obstruction. On the contrary, our method can eliminate these objects, and the ground simulation of our method restores the ground that is obstructed by movable objects or other static objects.<p></p>
+
+
+<p><strong>Perception performance.</strong><a href="https://github.com/xxxx">[code]</a><br>
+</p><center><img src="./lpccprj_files/perception_results.jpg" style="width:55%;height:auto"></center><br>
+Fig. 4: Visualization of the object detection results.The upper parts of (a), (b), (c) and (d) are the detection results of the original partial OLPC, and the lower parts are the results of our completed OLPC. Due to the partial nature of the original OLPC, most of the detected bounding boxes (BBoxes) cannot reflect the actual object boundaries. The main issues include excessively small BBoxes, tilted BBoxes, a single object corresponding to multiple BBoxes (many-to-one BBoxes), or detection failures. Our method can effectively alleviate these problems<p></p>
 
 
 
