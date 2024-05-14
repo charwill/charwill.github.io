@@ -9,14 +9,6 @@
 
 
 
-
-<hr><a name="Abstract"><b>Abstract</b></a>
-
-<br>
-<p>
-With the widespread application of LiDAR sensors in autonomous driving, there is a growing need for efficient LiDAR point cloud compression (LPCC). LPCC plays a critical role in effectively managing the storage, transmission, and perception of the expanding volume of LiDAR point cloud (LPC) data. However, there has been a lack of comprehensive investigations specifically focused on LPCC methods. To bridge this gap, this paper presents a systematic survey and extensive evaluation of LPCCs, aiming to summarize recent progress and inspire future research in this field. Firstly, we provide a clear picture of LPCC fundamentals, including the latest LPC datasets, distinctive attributes, evaluation metrics, and data formats. Secondly, we conduct a comprehensive review and comparison of existing LPCCs, such as image-based, octree-based, deep-learned, and other task-driven approaches. Finally, we propose a task-driven LPCC framework to meet the unique requirements of various tasks in autonomous driving. Overall, this paper will contribute to a better understanding of LPCCs and provide insights for the further development of autonomous driving systems. The proposed framework, the collected LPCC methods, as well as evaluation metrics are made publicly available on https://charwill.github.io/lpccprj.html.
-</p>
- 
  
 <br>
 <p>
@@ -147,23 +139,6 @@ Fig. 2: A taxonomy for LiDAR point cloud compression (LPCC). The existing method
 <p>【ICMEW 2021】An Improved Coarse-To-Fine Motion Estimation Scheme For LiDAR Point Cloud Geometry Compression <a href="https://ieeexplore.ieee.org/document/9456018">[paper]</a></p>
 <p>【IEEE Access 2022】LiDAR point cloud compression by vertically placed objects based on global motion prediction <a href="https://ieeexplore.ieee.org/document/9698207">[paper]</a></p>
 
-
-
-<h2><a id="Downstream_task_192"></a>Downstream Tasks</h2> 
-
-<p><strong>Localization performance.</strong> <a href="https://github.com/gisbi-kim/PyICP-SLAM">[code1]</a> , <a href="https://github.com/MichaelGrupp/evo">[code2]</a></p>
-<p></p><center><img src="./lpccprj_files/localization_results.jpg" style="width:60%;height:auto"></center><br>
-Fig. 2: Visualization of localization results on SemanticKITTI dataset. (a), (b), (c) and (d) correspond to the changes in the LiDAR sensor poses (including X, Y, Z, roll angle, pitch angle, and yaw angle) of sequences 11, 14, 15, and 18. Compared with the original LPCs, the pose of the LiDAR sensor estimated by reconstructed LPCs is closer to the ground truth in some segments, and the higher the BPP, the closer it is.<p></p>
-
-
-<p><strong>Mapping performance.</strong><a href="https://drive.google.com/file/d/1pdMqecZOIw-dov6bWvBLvehbLawruHrO/view?usp=drive_link">[code]</a><br>
-</p><center><img src="./lpccprj_files/mapping_results.jpg" style="width:55%;height:auto"></center><br>
-Fig. 3: Visualization of mapping results on SemanticKITTI dataset. (a), (b), (c) and (d) are four segments of the map constructed from the original LPCs (upper part) and our reconstructed LPCs (lower part) of sequences 11, 14, 15, and 18.  The map constructed from the original LPCs includes movable objects that should not be present. Especially, the movable objects in (c) and (d) occupy most of the road and result in extensive ground obstruction. On the contrary, our method can eliminate these objects, and the ground simulation of our method restores the ground that is obstructed by movable objects or other static objects.<p></p>
-
-
-<p><strong>Perception performance.</strong><a href="https://drive.google.com/file/d/1pdMqecZOIw-dov6bWvBLvehbLawruHrO/view?usp=drive_link">[code]</a><br>
-</p><center><img src="./lpccprj_files/perception_results.jpg" style="width:55%;height:auto"></center><br>
-Fig. 4: Visualization of the object detection results.The upper parts of (a), (b), (c) and (d) are the detection results of the original partial OLPC, and the lower parts are the results of our completed OLPC. Due to the partial nature of the original OLPC, most of the detected bounding boxes (BBoxes) cannot reflect the actual object boundaries. The main issues include excessively small BBoxes, tilted BBoxes, a single object corresponding to multiple BBoxes (many-to-one BBoxes), or detection failures. Our method can effectively alleviate these problems<p></p>
 
 
 
