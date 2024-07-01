@@ -1,0 +1,135 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Perceptually Lossless Coding (PLC): A Block-Level Dataset and Two-Branch Deep Framework</title></head><body>
+
+<center><h1>Perceptually Lossless Coding (PLC): A Block-Level Dataset and Two-Branch Deep Framework</h1></center>
+
+<center><h3>Miaohui Wang <i>et al.</i></h3></center>
+
+
+
+
+<hr><a name="Abstract"><b>Abstract</b></a>
+
+<br>
+<p>
+Perceptually lossless coding (PLC) plays a crucial role in high-quality video services, aiming to achieve maximum compression ratios while ensuring minimal visual distortions perceptible to human eyes. In this paper, we present a novel approach to enhance the PLC performance by developing a fine-grained scheme that optimizes the quantization parameter (QP) for coding blocks. Specifically, we first construct a block-level dataset and assign PLC-based QP labels through extensive visual quality subjective experiments.We then develop a new two-branch deep network architecture to predict PLC-based QP for each coding block: one branch focuses on extracting descriptive quality features, while the other captures bitrate features. Moreover, we propose a self-supervised training approach to tackle the challenge of dataset scarcity, ensuring accurate block-level QP inference. Experimental results on the H.266/VVC test model (VTM) in the all-intra profile demonstrate that our method achieves significant bit savings and improved PLC performance. These findings highlight the potential of fine-grained QP to push the boundaries of PLC, with wide-ranging implications for immersive video applications. The proposed framework and database as well as the collected compression methods are made publicly available on https://charwill.github.io/bmqa.html.
+ </p>
+ 
+<br>
+<p>
+</p><hr><a name="Download"><b>Download</b></a>
+<br>
+[<a href="https://media.xiph.org/video/derf/">Xiph.org Video Test Media</a>]
+<br>
+[<a href="https://qualinet.github.io/databases/video/sjtu_4k_video_sequence_dataset/">SJTU Media Lab</a>]
+<br>
+[<a href="https://docs.google.com/presentation/d/1SjD07NB1XjT42-lg4L7ClqV5qG7BOZJEncYKiDv2Atg/edit?usp=share_link">MCL-JCV</a>]
+<br>
+[<a href="https://mcl.usc.edu/mcl-jcv-dataset/">Ultra Video Group (UVG)</a>]
+<br>
+[<a href="https://multimedia.tencent.com/resources/tvd">Tencent Video DataSet (TVD)</a>]
+<br>
+[<a href="https://docs.google.com/presentation/d/xxx">Proposed blPLC</a>]
+[<a href="https://docs.google.com/presentation/d/xxx">Source Code</a>] 
+<br>
+<p></p>
+<hr>
+
+
+<br>
+<a name="dataset"><b>Proposed PLC dataset</b></a>
+<p><b>A. Source Video Collection</b>
+<br>To maintain diversity within our blPLC dataset, we have collected five high-quality or lossless video datasets widely used in the field of video compression. The basic statistical information of these datasets is provided in Table I, and their characteristics are described as follows: </p>
+
+<p>1) Xiph.org Video Test Media [31] is a popular large video dataset in the field of video coding. which includes 120 video sequences covering various resolutions, frame rates, and real-world video content applications.</p>
+
+<p>2) SJTU Media Lab introduces a UHD video dataset [32]. The camera settings have been carefully designed to provide diverse and high-quality videos content.</p>
+
+<p>3) MCL-JCV [25] consists of 30 uncompressed sequences which cover a broad spectrum of video features, encompassing multiple video types, diverse targets, and various scenes.</p>
+
+<p>4) Ultra Video Group (UVG) [33] provides one of the first public video datasets, which contains high frame-rate video (120fps). A higher frame-rate makes video content smoother, clearer, and more stereoscopic video content, particularly in high-dynamic videos.</p>
+
+<p>5) Tencent Video DataSet (TVD) [34] presents a 4K highquality video dataset tailored for learning-based video compression and analysis. This dataset contains a variety of static or moving objects, which have been used in neural network-based video coding (NNVC) by Joint Video Experts Team (JVET).</p>
+
+<p>Given the varying resolutions and content of the video sequences in the five datasets, we have performed data preprocessing to ensure the quality of our blPLC dataset and facilitate subsequent model training. This pre-processing involves two steps: key-frame extraction and content cropping. The processed frames are finally encoded at different QPs, and subjective experiments are conducted to generate labels.</p>
+
+<p><b>B. Key-frame Extraction</b>
+<br>There exists significant repetitive frame content in a typical video sequence, such as low dynamic video and pure black/white frames caused by shot switching. Such repeated frame content not only consumes computing resources during model training but also diminishes the model generalization ability. Additionally, invalid video frames exhibit little changes in rate and distortion across different quality levels. To mitigate the above problems, we manually extract key-frames from all video sequences, ensuring that the selected frames accurately represent the main content of each video sequence.</p>
+
+<p><b>C. Content Cropping</b>
+<br>Due to the varying resolutions of the source video, we fix the frame size to 1280x720 for the convenience of model training. To keep the data pristine and avoid introducing additional distortion, we employ cropping instead of downsampling to generate our blPLC from higher-resolution videos. During the content cropping, we also ensure that the cropped content adequately reflects the main content of the original frame. Following the aforementioned selection and cropping rules, a total 335 frames are generated.</p>
+
+<p><b>D/E. Multiple-QP Compression and PLC Label Generation</b>
+<br>VVC adopts a hybrid framework including prediction, transform, quantization, in-loop filtering, and entropy coding. Assuming that the input frame I is firstly divided into multiple CTUs, {I_ctu_i}i=1,...,N . Then, the rate-distortion optimization (RDO) strategy is used to determine the best encoding modes or parameters for each I_ctu_i. 
+
+
+We compress 355 original frames into multiple quality levels to generate the candidate set. The configuration of encoder intra vtm.cfg is chosen for VTM 14.2, where delta QP is set to 7 that is the maximum value supported by the reference software. By traversing all \theta Qi in S_delta QP, we obtain 8355 (i.e., 355x25) distorted images and their QP maps corresponding to different distortion levels. The objective of PLC is to minimize video storage or transmission requirements while preserving visual quality that is imperceptible to the HVS. The increase of QP induces more compression distortion but reduces lower bitrate cost. Therefore, the PLC objective can be viewed as identifying the maximum QP that prevents perceptible distortion by the HVS.</p>
+
+
+<p><b>E. Subjective Experiments</b>
+<br>Due to the varying resolutions of the source video, we fix the frame size to 1280x720 for the convenience of model training. To keep the data pristine and avoid introducing additional distortion, we employ cropping instead of downsampling to generate our blPLC from higher-resolution videos. During the content cropping, we also ensure that the cropped content adequately reflects the main content of the original frame. Following the aforementioned selection and cropping rules, a total 335 frames are generated.</p>
+
+
+<br>
+<a name="dataset"><b>Proposed two-branch method</b></a>
+
+<p>To achieve the best PLC performance, we predict the optimal QP map for VTM by using a DNN model. Given that visual perception is for the entire frame and the QP value of each CTU is not completely independent, we have designed a deep network F_DNN to predict the entire QP map.
+The QP values directly affect the compression ratio and perceptual quality. As a result, we incorporate bitrate and quality information into the modeling of F_DNN. To utilize rate and quality features to predict a QP map, we design a new two-branch QP prediction model, including a quality encoder F_IQA Enc , a rate encoder FDIC Enc , a trade-off module F_TF, and a QP predictor F_QP.
+</p>
+
+<p><b>Self-supervised Training</b>
+This training phase focuses on constructing the quality and rate encoders based on two tasks, and then map them into the same feature space by selfsupervised learning.</p>
+<p>(I) Quality Encoder. For the quality encoder F_IQA^Enc, learningbased IQA utilizes a backbone network to extract perceptual quality features and further predict the image quality score s' as close as the ground-truth one s The IQA training objective function can be formulated.
+</p>
+<p>(II) Rate Encoder. For the rate encoder F_DIC^Enc, end-to-end DIC learns compact compression features and further encodes them by entropy models. The DIC training objective function can be formulated.
+</p>
+<p>(III) Alignment. To enhance feature representation capability, we map the quality and rate features into the same space. More specifically, we use a CTU-level masking strategy to augment the training dataset, which randomly masks CTUs in the input frame I. In addition, we adopt the cosine similarity function [38] to guide the comparative learning between F_IQA^Enc and F_DIC^Enc.
+</p>
+
+
+<p><b>Supervised Training</b>
+This training phase aims to adjust the latent features from the pre-trained feature encoders F_IQA^Enc and F_DIC^Enc . These processed features are used to predict the PLC-based QP map, M_PLC^QP.</p>
+<p>(I) Trade-off module. The trade-off module aims to learn the impact between quality and rate features in predicting M_PLC^QP. We employ learnable weights to assign importance to F_quality and Frate, followed by the convolution operation to fuse them. Moreover, a channel attention module is utilized to enhance the weighting of each channel within the fused features. Overall, the trade-off module, F_TF.
+</p>
+<p>(II) Predictor. The QP prediction task is regarded as a
+regression task to minimize the error between M_PLC^QP and M'_PLC^QP. The QP prediction module FQP consists of three convolution layers that downsample the fused feature FTF to predict the final PLC-based QP map.
+</p>
+<p>(III) Training. Overall, the DNN for predicting M_PLC^QP can be formulated. All the experiments are conducted on a computing server equipped with the CPU@Xeon W-2265, the RAM@64G memory, and the GPU@NVIDIA TITAN RTX 24G. We adopt the Python toolbox PyTorch to implement our two-branch PLC-based QP prediction model FDNN. During the self-supervised training and supervised training stages. The learning rate and batch size are set to 5e-5 and 8, respectively. Adaptive moment estimation (Adam) is used to optimize the network parameters. We train FDNN for 10 epochs in the self-supervised learning stage and 300 epochs in the supervised learning stage.
+</p>
+
+
+<br>
+<hr>
+<a name="References"><b>References</b></a>
+<br>
+[<i>H.264/AVC</i>] Wiegand, Thomas, Gary J. Sullivan, Gisle Bjontegaard, and Ajay Luthra. "Overview of the H. 264/AVC video coding standard." IEEE Transactions on circuits and systems for video technology 13, no. 7 (2003): 560--576. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://vcgit.hhi.fraunhofer.de/jvet/JM">implementation</a> ]
+<br>
+[<i>H.265/HEVC</i>] Ohm, Jens-Rainer, Gary J. Sullivan, Heiko Schwarz, Thiow Keng Tan, and Thomas Wiegand. "Comparison of the coding efficiency of video coding standards-including high efficiency video coding (HEVC)." IEEE Transactions on circuits and systems for video technology 22, no. 12 (2012): 1669--1684. [ <a href="https://ieeexplore.ieee.org/document/8576582">paper</a>, <a href="https://vcgit.hhi.fraunhofer.de/jvet/HM">implementation</a> ]
+<br>
+[<i>H.266/VVC</i>] Bross, Benjamin, Ye-Kui Wang, Yan Ye, Shan Liu, Jianle Chen, Gary J. Sullivan, and Jens-Rainer Ohm. "Overview of the versatile video coding (VVC) standard and its applications." IEEE Transactions on Circuits and Systems for Video Technology 31, no. 10 (2021): 3736--3764. [ <a href="https://ieeexplore.ieee.org/abstract/document/9503377">paper</a>, <a href="https://vcgit.hhi.fraunhofer.de/jvet/VVCSoftware_VTM">implementation</a> ]
+<br>
+[<i>Mentzer2019CVPR</i>] Fabian Mentzer, Eirikur Agustsson, Michael Tschannen, Radu Timofte, and Luc Van Gool. Practical full resolution learned lossless image compression. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 10629--10638, 2019. [ <a href="http://openaccess.thecvf.com/content_CVPR_2019/html/Mentzer_Practical_Full_Resolution_Learned_Lossless_Image_Compression_CVPR_2019_paper.html">paper</a>, <a href="https://github.com/fab-jul/L3C-PyTorch">implementation</a> ]
+<br>
+[<i>Mentzer2020CVPR</i>] Fabian Mentzer, Luc Van Gool, and Michael Tschannen. Learning better lossless compression using lossy compression. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 6638--6647, 2020. [ <a href="https://openaccess.thecvf.com/content_CVPR_2020/papers/Mentzer_Learning_Better_Lossless_Compression_Using_Lossy_Compression_CVPR_2020_paper.pdf">paper</a>, <a href="https://github.com/fab-jul/RC-PyTorch">implementation</a> ]
+<br>
+[<i>Rhee2022CVPR</i>] Hochang Rhee, Yeong Il Jang, Seyun Kim, and Nam Ik Cho. LC-FDNet: Learned Lossless Image Compression with Frequency Decomposition Network. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 6033--6042, 2022. [ <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Rhee_LC-FDNet_Learned_Lossless_Image_Compression_With_Frequency_Decomposition_Network_CVPR_2022_paper.pdf">paper</a>, <a href="https://github.com/myideaisgood/LC-FDNet">implementation</a> ]
+<br>
+[<i>Bai2021CVPR</i>] Yuanchao Bai, Xianming Liu, Wangmeng Zuo, Yaowei Wang, and Xiangyang Ji. Learning scalable L-constrained near-lossless image compression via joint lossy image and residual compression. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 11946--11955, 2021. [ <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Bai_Learning_Scalable_lY-Constrained_Near-Lossless_Image_Compression_via_Joint_Lossy_Image_CVPR_2021_paper.pdf">paper</a>, <a href="https://github.com/BYchao100/Scalable-Near-lossless-Image-Compression">implementation</a> ]
+<br>
+[<i>Hu2021AAAI</i>] Yueyu Hu, Wenhan Yang, and Jiaying Liu. Coarse-to-fine hyper-prior modeling for learned image compression. In AAAI Conference on Artificial Intelligence (AAAI), volume 34, pages 11013--11020, 2020. [ <a href="https://ojs.aaai.org/index.php/AAAI/article/view/6736">paper</a>, <a href="https://github.com/huzi96/Coarse2Fine-ImaComp">implementation</a> ]
+<br>
+[<i>Li2022MM</i>] Jiahao Li, Bin Li, and Yan Lu. Hybrid spatial-temporal entropy modeling for neural video compression. In ACM International Conference on Multimedia (ACMMM), pages 1503--1511, 2022. [ <a href="https://dl.acm.org/doi/abs/10.1145/3503161.3547845">paper</a>, <a href="https://github.com/microsoft/DCVC">implementation</a> ]
+<br>
+
+
+
+<br>
+<br>
+<hr align="center" size="2" width="100%">
+<!-- Start of CuterCounter Code -->
+<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=100&t=tt&d=XQzdCPhOcp1cWiDF9FcCiysYiJL0pqS3ORXKLbHtc4g&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353'></script>
+<!-- End of CuterCounter Code -->
+
+
+
+ </body></html>
