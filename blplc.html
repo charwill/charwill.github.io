@@ -39,15 +39,15 @@ Perceptually lossless coding (PLC) plays a crucial role in high-quality video se
 <p><b>A. Source Video Collection</b>
 <br>To maintain diversity within our blPLC dataset, we have collected five high-quality or lossless video datasets widely used in the field of video compression. The basic statistical information of these datasets is provided in Table I, and their characteristics are described as follows: </p>
 
-<p>1) Xiph.org Video Test Media [31] is a popular large video dataset in the field of video coding. which includes 120 video sequences covering various resolutions, frame rates, and real-world video content applications.</p>
+<p>1) Xiph.org Video Test Media is a popular large video dataset in the field of video coding. which includes 120 video sequences covering various resolutions, frame rates, and real-world video content applications.</p>
 
-<p>2) SJTU Media Lab introduces a UHD video dataset [32]. The camera settings have been carefully designed to provide diverse and high-quality videos content.</p>
+<p>2) SJTU Media Lab introduces a UHD video dataset. The camera settings have been carefully designed to provide diverse and high-quality videos content.</p>
 
-<p>3) MCL-JCV [25] consists of 30 uncompressed sequences which cover a broad spectrum of video features, encompassing multiple video types, diverse targets, and various scenes.</p>
+<p>3) MCL-JCV consists of 30 uncompressed sequences which cover a broad spectrum of video features, encompassing multiple video types, diverse targets, and various scenes.</p>
 
-<p>4) Ultra Video Group (UVG) [33] provides one of the first public video datasets, which contains high frame-rate video (120fps). A higher frame-rate makes video content smoother, clearer, and more stereoscopic video content, particularly in high-dynamic videos.</p>
+<p>4) Ultra Video Group (UVG) provides one of the first public video datasets, which contains high frame-rate video (120fps). A higher frame-rate makes video content smoother, clearer, and more stereoscopic video content, particularly in high-dynamic videos.</p>
 
-<p>5) Tencent Video DataSet (TVD) [34] presents a 4K highquality video dataset tailored for learning-based video compression and analysis. This dataset contains a variety of static or moving objects, which have been used in neural network-based video coding (NNVC) by Joint Video Experts Team (JVET).</p>
+<p>5) Tencent Video DataSet (TVD) presents a 4K highquality video dataset tailored for learning-based video compression and analysis. This dataset contains a variety of static or moving objects, which have been used in neural network-based video coding (NNVC) by Joint Video Experts Team (JVET).</p>
 
 <p>Given the varying resolutions and content of the video sequences in the five datasets, we have performed data preprocessing to ensure the quality of our blPLC dataset and facilitate subsequent model training. This pre-processing involves two steps: key-frame extraction and content cropping. The processed frames are finally encoded at different QPs, and subjective experiments are conducted to generate labels.</p>
 
@@ -81,7 +81,7 @@ This training phase focuses on constructing the quality and rate encoders based 
 </p>
 <p>(II) Rate Encoder. For the rate encoder F_DIC^Enc, end-to-end DIC learns compact compression features and further encodes them by entropy models. The DIC training objective function can be formulated.
 </p>
-<p>(III) Alignment. To enhance feature representation capability, we map the quality and rate features into the same space. More specifically, we use a CTU-level masking strategy to augment the training dataset, which randomly masks CTUs in the input frame I. In addition, we adopt the cosine similarity function [38] to guide the comparative learning between F_IQA^Enc and F_DIC^Enc.
+<p>(III) Alignment. To enhance feature representation capability, we map the quality and rate features into the same space. More specifically, we use a CTU-level masking strategy to augment the training dataset, which randomly masks CTUs in the input frame I. In addition, we adopt the cosine similarity function to guide the comparative learning between F_IQA^Enc and F_DIC^Enc.
 </p>
 
 
