@@ -1,4 +1,3 @@
-<!-- saved from url=(0055)file:///E:/Website/charwill.github.io-master/blplc.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Efficient 3D Surface Super-resolution via Normal-based Multimodal Restoration</title></head><body>
 
@@ -13,33 +12,32 @@
 
 <br>
 <p>
-High-fidelity 3D surface is essential for vision tasks across various domains such as medical imaging, cultural heritage preservation, quality inspection, virtual reality, and autonomous navigation. However, the intricate nature of 3D data representations poses significant challenges in restoring diverse 3D surfaces while capturing fine-grained geometric details at a low cost. This paper introduces an efficient multimodal normal-based 3D surface super-resolution (mn3DSSR) framework, designed to address the challenges of microgeometry enhancement and computational overhead. Specifically, we have constructed one of the largest photometric stereo dataset, ensuring superior data quality and diversity through meticulous subjective selection. Furthermore, we explore a new two-branch multimodal alignment approach along with a multimodal split fusion module to mitigate computational complexity while improve restoration performance. To address the limitations associated with normal-based multimodal learning, we develop novel normal-induced loss functions that facilitate geometric consistency and improve feature alignment. Extensive experiments conducted on seven benchmark datasets across four different 3D data representations demonstrate that mn3DSSR consistently outperforms state-of-the-art super-resolution methods in terms of restoration accuracy with high computational efficiency.
+High-fidelity 3D surface is essential for vision tasks across various domains such as medical imaging, cultural heritage preservation, quality inspection, virtual reality, and autonomous navigation. However, the intricate nature of 3D data representations poses significant challenges in restoring diverse 3D surfaces while capturing fine-grained geometric details at a low cost. This paper introduces an efficient multimodal normal-based 3D surface super-resolution (mn3DSSR) framework, designed to address the challenges of microgeometry enhancement and computational overhead. Specifically, we have constructed one of the largest photometric stereo dataset, ensuring superior data quality and diversity through meticulous subjective selection. Furthermore, we explore a new two-branch multimodal alignment approach along with a multimodal split fusion module to mitigate computational complexity while improving restoration performance. To address the limitations associated with normal-based multimodal learning, we develop novel normal-induced loss functions that facilitate geometric consistency and improve feature alignment. Extensive experiments conducted on seven benchmark datasets across four different 3D data representations demonstrate that mn3DSSR consistently outperforms state-of-the-art super-resolution methods in terms of restoration accuracy with high computational efficiency.
  </p>
  
 <br>
 <p>
 </p><hr><a name="Download"><b>Download</b></a>
 <br>
-[<a href="https://docs.google.com/presentation/d/xxx">Gourd&Apple</a>]
+[<a href="https://drive.google.com/drive/folders/1_bOM2nghnYTBrlmNOqRh5y5elPjvShOb">Gourd&Apple Dataset</a>]
 <br>
-[<a href="https://docs.google.com/presentation/d/xxx">Harvard</a>]
+[<a href="https://vision.seas.harvard.edu/qsfs/Data.html">Harvard Dataset</a>]
 <br>
-[<a href="https://docs.google.com/presentation/d/xxx">DiLiGenT10^2</a>]
+[<a href="https://disk.pku.edu.cn/anyshare/en-us/link/AA2725831ED6D74D2396D8338CF434669D?_tb=none&expires_at=2035-04-14T14%3A43%3A48%2B08%3A00&item_type=file&password_required=false&title=DiLiGenT10%5E2_pmsData_release.zip&type=anonymous">DiLiGenT10^2 Dataset</a>]
 <br>
-[<a href="https://docs.google.com/presentation/d/xxx">DiLiGenT</a>]
+[<a href="https://sites.google.com/site/photometricstereodata/single?authuser=0">DiLiGenT Dataset</a>]
 <br>
-[<a href="https://docs.google.com/presentation/d/xxx">LUCES</a>]
+[<a href="https://www.toshiba.eu/pages/eu/Cambridge-Research-Laboratory/download-luces-dataset">LUCES Dataset</a>]
 <br>
-[<a href="https://docs.google.com/presentation/d/xxx">WPS</a>]
+[<a href="https://drive.google.com/file/d/1At34c7LrIQ_qcJLtFZqbjotngk_cQNeB/view?usp=sharing">WPS Dataset</a>]
 <br>
-[<a href="https://docs.google.com/presentation/d/xxx">our WPS+</a>]
+[<a href="https://docs.google.com/presentation/d/1ih7J-mMSxvSa7NXk8g_OMMCtw0Eyo1DItXdcoTzvVhM/edit?usp=drive_link">Proposed Multimodal Normal-based  WPS+ Dataset</a>]
 [<a href="https://docs.google.com/presentation/d/xxx">Source Code</a>] 
 <br>
 <p></p>
 <hr>
 
 
-<br>
 <a name="dataset"><b>Proposed WPS+ dataset</b></a>
 <p><b>A. Improvements of WPS+</b>
 <br>To maintain diversity within our blPLC dataset, we have collected five high-quality or lossless video datasets widely used in the field of video compression. The basic statistical information of these datasets is provided in Table I, and their characteristics are described as follows: </p>
@@ -55,22 +53,36 @@ High-fidelity 3D surface is essential for vision tasks across various domains su
 <p>5) To better represent diverse surface shapes, we have greatly expanded the number of dataset samples, now including 600 objects in WPS+ compared to 400 objects in WPS.</p>
 
 <p>6) After improving data quality, we have scaled the WPS+ dataset by a larger magnification to obtain a more comprehensive super-resolution dataset, including the ×2, ×4, and ×8 sampling settings.</p>
-
+<br>
+<img src="./mn3dssr_files/fig_dataset_compare_to_wps.png" width="460"><br>
+<b>Fig. 1: Dataset improvements from our previous WPS to WPS+.</b>  (a) Dataset Acquisition Setup: Our photometric stereo device consisting of industrial camera and LED lights. (b) Dataset Enhancement: Several enhancements have been made to the WPS dataset, resulting in the higher quality of the WPS+.
+<br>
 
 
 <br>
 <a name="dataset"><b>Proposed mn3DSSR method</b></a>
 <p><b>A. Multimodal Pre-processing Stage (MPS)</b>
 <br>MPS performs necessary feature transformation on the raw multimodal data, addressing two main issues: (1) normalizing the input to minimize variations and distribution differences across modalities from various sources, and (2) constructing primary features for the alignment module, generating shape and texture features. </p>
-
+<br>
+<img src="./mn3dssr_files/fig_mps.png" width="460"><br>
+<b>Fig. 2: Multimodal Pre-processing Stage (MPS).</b>  Three modalities are pre-processed to generate primary features for subsequent alignment and fusion.
+<br>
 
 
 <p><b>B. Multimodal Swin-Transformer Alignment (MSTA)</b>
 <br>To align the previously processed I′_lr and D′_lr, we propose a new two-branch multimodal Swin-Transformer alignment (MSTA) module, consisting of a RGB-texture alignment branch and a depth-shape alignment branch. Specifically, our objective is primarily to enhance the texture normal information by aligning I′_lr with N^t_lr in the RGB-texture branch. Simultaneously, we inject the global 3D geometric information into the shape normal by aligning D′_lr with N^s_lr in the depth-shape branch. </p>
+<br>
+<img src="./mn3dssr_files/fig_cmsta.png" width="860"><br>
+<b>Fig. 3: Illustration of the proposed MSTA module.</b>  (a) Multimodal Swin-Transformer Alignment (MSTA): RGB and depth features are separately aligned through the embedding alignment-adaptation paradigm. (b) Mix Attention Transformer (MAT): The Swin Transformer is extended to combine cross attention and self-attention. (c) Upsampling Block. (d) Residual Block.
+<br>
+
 
 <p><b>C. Multimodal Split Fusion (MSF)</b>
 <br>After processing the side-modality features in the MSTA module, Ftn and Fsn are further fused into the normal modality to assist in super-resolution feature extraction. In our previous method [11], a fusion module has been developed based on a spatial feature transform to modulate side-modalities. However, this approach often neglects dynamic changes in the main normal branch and struggles to adapt to the distinct characteristics of texture and shape normal features. To address this limitation, we propose a multimodal split fusion (MSF) module that integrates texture and shape normal features.</p>
-
+<br>
+<img src="./mn3dssr_files/fig_cmsf.png" width="860"><br>
+<b>Fig. 4: Multimodal Split Fusion (MSF).</b>  A texture enhancer and a shape enhancer are tailored to split and enhance the texture and shape features of F^l_sr. These enhanced components are fused with the enhanced F_tn and F_sn, respectively. Subsequently, the fused texture and shape components (i.e., F^l_texture and F^l_shape) are recombined through the texture-shape fusion module.
+<br>
 
 
 
@@ -78,52 +90,52 @@ High-fidelity 3D surface is essential for vision tasks across various domains su
 <hr>
 <a name="References"><b>References</b></a>
 <br>
-[<i>Qian2021CVPR</i>] G. Qian, A. Abualshour, G. Li, A. Thabet, and B. Ghanem, “Pu-gcn: Point Cloud Upsampling Using Graph Convolutional Networks,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2021, pp. 11 683–11 692. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Qian2021CVPR</i>] G. Qian, A. Abualshour, G. Li, A. Thabet, and B. Ghanem, “Pu-gcn: Point Cloud Upsampling Using Graph Convolutional Networks,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2021, pp. 11 683–11 692. [ <a href="http://openaccess.thecvf.com/content/CVPR2021/html/Qian_PU-GCN_Point_Cloud_Upsampling_Using_Graph_Convolutional_Networks_CVPR_2021_paper.html/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Feng2022CVPR</i>] W. Feng, J. Li, H. Cai, X. Luo, and J. Zhang, “Neural Points: Point Cloud Representation with Neural Fields for Arbitrary Upsampling,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2022, pp. 18 633–18 642. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Feng2022CVPR</i>] W. Feng, J. Li, H. Cai, X. Luo, and J. Zhang, “Neural Points: Point Cloud Representation with Neural Fields for Arbitrary Upsampling,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2022, pp. 18 633–18 642. [ <a href="http://openaccess.thecvf.com/content/CVPR2022/html/Feng_Neural_Points_Point_Cloud_Representation_With_Neural_Fields_for_Arbitrary_CVPR_2022_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>He2023CVPR</i>] Y. He, D. Tang, Y. Zhang, X. Xue, and Y. Fu, “Grad-PU: Arbitrary-Scale Point Cloud Upsampling via Gradient Descent with Learned Distance Functions,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023, pp. 5354–5363. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>He2023CVPR</i>] Y. He, D. Tang, Y. Zhang, X. Xue, and Y. Fu, “Grad-PU: Arbitrary-Scale Point Cloud Upsampling via Gradient Descent with Learned Distance Functions,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023, pp. 5354–5363. [ <a href="http://openaccess.thecvf.com/content/CVPR2023/html/He_Grad-PU_Arbitrary-Scale_Point_Cloud_Upsampling_via_Gradient_Descent_With_Learned_CVPR_2023_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
 [<i>Loop2008TOG</i>] C. Loop and S. Schaefer, “Approximating Catmull-Clark Subdivision Surfaces with Bicubic Patches,” ACM Transactions on Graphics, vol. 27, no. 1, pp. 1–11, 2008. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Liu2020TOG</i>] H.-T. D. Liu, V. G. Kim, S. Chaudhuri, N. Aigerman, and A. Jacobson, “Neural subdivision,” ACM Transactions on Graphics, vol. 39, no. 2, pp. 10–16, 2020. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Liu2020TOG</i>] H.-T. D. Liu, V. G. Kim, S. Chaudhuri, N. Aigerman, and A. Jacobson, “Neural subdivision,” ACM Transactions on Graphics, vol. 39, no. 2, pp. 10–16, 2020. [ <a href="https://dl.acm.org/doi/abs/10.1145/1330511.1330519">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Shim2023CVPR</i>] J. Shim, C. Kang, and K. Joo, “Diffusion-Based Signed Distance Fields for 3D Shape Generation,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023, pp. 20 887–20 897. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Shim2023CVPR</i>] J. Shim, C. Kang, and K. Joo, “Diffusion-Based Signed Distance Fields for 3D Shape Generation,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023, pp. 20 887–20 897. [ <a href="http://openaccess.thecvf.com/content/CVPR2023/html/Shim_Diffusion-Based_Signed_Distance_Fields_for_3D_Shape_Generation_CVPR_2023_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Voynov2019ICCV</i>] O. Voynov, A. Artemov, V. Egiazarian, A. Notchenko, G. Bobrovskikh, E. Burnaev, and D. Zorin, “Perceptual Deep Depth Super-Resolution,” in IEEE International Conference on Computer Vision (ICCV), 2019, pp. 5653–5663. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Voynov2019ICCV</i>] O. Voynov, A. Artemov, V. Egiazarian, A. Notchenko, G. Bobrovskikh, E. Burnaev, and D. Zorin, “Perceptual Deep Depth Super-Resolution,” in IEEE International Conference on Computer Vision (ICCV), 2019, pp. 5653–5663. [ <a href="http://openaccess.thecvf.com/content_ICCV_2019/html/Voynov_Perceptual_Deep_Depth_Super-Resolution_ICCV_2019_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Deng2021TPAMI</i>] X. Deng and P. L. Dragotti, “Deep Convolutional Neural Network for Multi-Modal Image Restoration and Fusion,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 43, no. 10,pp.3333–3348, 2021. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Deng2021TPAMI</i>] X. Deng and P. L. Dragotti, “Deep Convolutional Neural Network for Multi-Modal Image Restoration and Fusion,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 43, no. 10,pp.3333–3348, 2021. [ <a href="https://ieeexplore.ieee.org/abstract/document/9055063/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Zhao2022CVPR</i>] Z. Zhao, J. Zhang, S. Xu, Z. Lin, and H. Pfister, “Discrete Cosine Transform Network for Guided Depth Map Super-Resolution,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2022, pp. 5697–5707. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Zhao2022CVPR</i>] Z. Zhao, J. Zhang, S. Xu, Z. Lin, and H. Pfister, “Discrete Cosine Transform Network for Guided Depth Map Super-Resolution,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2022, pp. 5697–5707. [ <a href="http://openaccess.thecvf.com/content/CVPR2022/html/Zhao_Discrete_Cosine_Transform_Network_for_Guided_Depth_Map_Super-Resolution_CVPR_2022_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Metzger2023CVPR</i>] N. Metzger, R. C. Daudt, and K. Schindler, “Guided Depth Super- Resolution by Deep Anisotropic Diffusion,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023, pp. 18 237– 18 246. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Metzger2023CVPR</i>] N. Metzger, R. C. Daudt, and K. Schindler, “Guided Depth Super- Resolution by Deep Anisotropic Diffusion,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023, pp. 18 237– 18 246. [ <a href="http://openaccess.thecvf.com/content/CVPR2023/html/Metzger_Guided_Depth_Super-Resolution_by_Deep_Anisotropic_Diffusion_CVPR_2023_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Ju2022IJCV</i>] Y. Ju, B. Shi, M. Jian, L. Qi, J. Dong, and K.-M. Lam, “NormAttention-PSN: A High-frequency Region Enhanced Photometric Stereo Network with Normalized Attention,” Springer International Journal of Computer Vision, vol. 130, no. 12, pp. 3014– 3034, 2022. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Ju2022IJCV</i>] Y. Ju, B. Shi, M. Jian, L. Qi, J. Dong, and K.-M. Lam, “NormAttention-PSN: A High-frequency Region Enhanced Photometric Stereo Network with Normalized Attention,” Springer International Journal of Computer Vision, vol. 130, no. 12, pp. 3014– 3034, 2022. [ <a href="https://link.springer.com/article/10.1007/s11263-022-01684-8">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Xie2022CVPR</i>] W. Xie, T. Huang, and M. Wang, “MNSRNet: Multimodal Transformer Network for 3D Surface Super-Resolution,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2022, pp. 12 703–12 712. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Xie2022CVPR</i>] W. Xie, T. Huang, and M. Wang, “MNSRNet: Multimodal Transformer Network for 3D Surface Super-Resolution,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2022, pp. 12 703–12 712. [ <a href="http://openaccess.thecvf.com/content/CVPR2022/html/Xie_MNSRNet_Multimodal_Transformer_Network_for_3D_Surface_Super-Resolution_CVPR_2022_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Xie2023IJCAI</i>] W. Xie, T. Huang, and M. Wang, “3D Surface Super-resolution from Enhanced 2D Normal Images: A Multimodal-driven Variational AutoEncoder Approach,” in International Joint Conference on Artificial Intelligence (IJCAI), 2023, pp. 1578–1586. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Xie2023IJCAI</i>] W. Xie, T. Huang, and M. Wang, “3D Surface Super-resolution from Enhanced 2D Normal Images: A Multimodal-driven Variational AutoEncoder Approach,” in International Joint Conference on Artificial Intelligence (IJCAI), 2023, pp. 1578–1586. [ <a href="https://www.ijcai.org/proceedings/2023/0175.pdf">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Dong2016TPAMI</i>] C. Dong, C. C. Loy, K. He, and X. Tang, “Image Super-Resolution Using Deep Convolutional Networks,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 38, no. 2, pp. 295–307, 2015. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Dong2016TPAMI</i>] C. Dong, C. C. Loy, K. He, and X. Tang, “Image Super-Resolution Using Deep Convolutional Networks,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 38, no. 2, pp. 295–307, 2015. [ <a href="https://ieeexplore.ieee.org/abstract/document/7115171/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Zhang2018ECCV</i>] Y. Zhang, K. Li, K. Li, L. Wang, B. Zhong, and Y. Fu, “Image Super-Resolution Using very Deep Residual Channel Attention Networks,” in European Conference on Computer Vision (ECCV), 2018, pp. 286–301. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Zhang2018ECCV</i>] Y. Zhang, K. Li, K. Li, L. Wang, B. Zhong, and Y. Fu, “Image Super-Resolution Using very Deep Residual Channel Attention Networks,” in European Conference on Computer Vision (ECCV), 2018, pp. 286–301. [ <a href="http://openaccess.thecvf.com/content_ECCV_2018/html/Yulun_Zhang_Image_Super-Resolution_Using_ECCV_2018_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Zhang2021TPAMI</i>] Y. Zhang, Y. Tian, Y. Kong, B. Zhong, and Y. Fu, “Residual Dense Network for Image Restoration,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 43, no. 7, pp. 2480–2495, 2021. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Zhang2021TPAMI</i>] Y. Zhang, Y. Tian, Y. Kong, B. Zhong, and Y. Fu, “Residual Dense Network for Image Restoration,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 43, no. 7, pp. 2480–2495, 2021. [ <a href="http://openaccess.thecvf.com/content_cvpr_2018/html/Zhang_Residual_Dense_Network_CVPR_2018_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Chen2021CVPR</i>] W. Xie, T. Huang, and M. Wang, “3D Surface Super-resolution from Enhanced 2D Normal Images: A Multimodal-driven Variational AutoEncoder Approach,” in International Joint Conference on Artificial Intelligence (IJCAI), 2023, pp. 1578–1586. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Chen2021CVPR</i>] H. Chen, Y. Wang, T. Guo, C. Xu, Y. Deng, Z. Liu, S. Ma, C. Xu, C. Xu, and W. Gao, “Pre-trained Image Processing Transformer,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2021, pp. 12299–12310. [ <a href="http://openaccess.thecvf.com/content/CVPR2021/html/Chen_Pre-Trained_Image_Processing_Transformer_CVPR_2021_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Ma2022TPAMI</i>] C. Ma, Y. Rao, J. Lu, and J. Zhou, “Structure-Preserving Image Super-Resolution,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 44, no. 11, pp. 7898–7911, 2022. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Ma2022TPAMI</i>] C. Ma, Y. Rao, J. Lu, and J. Zhou, “Structure-Preserving Image Super-Resolution,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 44, no. 11, pp. 7898–7911, 2022. [ <a href="https://ieeexplore.ieee.org/abstract/document/9546645/paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Saharia2023TPAMI</i>] C. Saharia, J. Ho,W. Chan, T. Salimans, D. J. Fleet, and M. Norouzi, “Image Super-Resolution via Iterative Refinement,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 45, no. 4, pp. 4713–4726, 2023. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Saharia2023TPAMI</i>] C. Saharia, J. Ho,W. Chan, T. Salimans, D. J. Fleet, and M. Norouzi, “Image Super-Resolution via Iterative Refinement,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 45, no. 4, pp. 4713–4726, 2023. [ <a href="https://ieeexplore.ieee.org/abstract/document/9887996/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Zamir2023TPAMI</i>] S. W. Zamir, A. Arora, S. Khan, M. Hayat, F. S. Khan, M.- H. Yang, and L. Shao, “Learning Enriched Features for Fast Image Restoration and Enhancement,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 45, no. 2, pp. 1934–1948, 2023. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Zamir2023TPAMI</i>] S. W. Zamir, A. Arora, S. Khan, M. Hayat, F. S. Khan, M.- H. Yang, and L. Shao, “Learning Enriched Features for Fast Image Restoration and Enhancement,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 45, no. 2, pp. 1934–1948, 2023. [ <a href="https://ieeexplore.ieee.org/abstract/document/9756908/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 <br>
-[<i>Chen2023CVPR</i>] X. Chen, X. Wang, J. Zhou, Y. Qiao, and C. Dong, “Activating More Pixels in Image Super-Resolution Transformer,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023, pp. 22 367–22 377. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Chen2023CVPR</i>] X. Chen, X. Wang, J. Zhou, Y. Qiao, and C. Dong, “Activating More Pixels in Image Super-Resolution Transformer,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023, pp. 22 367–22 377. [ <a href="http://openaccess.thecvf.com/content/CVPR2023/html/Chen_Activating_More_Pixels_in_Image_Super-Resolution_Transformer_CVPR_2023_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 
 <br>
-[<i>Li2019CVPR</i>] Y. Li, V. Tsiminaki, R. Timofte, M. Pollefeys, and L. V. Gool, “3D appearance Super-Resolution with Deep Learning,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2019, pp. 9671–9680. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]<br>
-[<i>Deng2021TIP</i>] X. Deng, Y. Zhang, M. Xu, S. Gu, and Y. Duan, “Deep Coupled FeedBack Network for Joint Exposure Fusion and Image Super- Resolution,” IEEE Transactions on Image Processing, vol. 30, no. 1, pp. 3098–3112, 2021. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]<br>
-[<i>Georgescu2023WACV</i>] M.-I. Georgescu, R. T. Ionescu, A.-I. Miron, O. Savencu, N.- C. Ristea, N. Verga, and F. S. Khan, “Multimodal Multi-Head Convolutional Attention with Various Kernel Sizes for Medical Image Super-Resolution,” in IEEEWinter Conference on Applications of Computer Vision (WCACV), 2023, pp. 2195–2205. [ <a href="https://ieeexplore.ieee.org/abstract/document/1218189/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
+[<i>Li2019CVPR</i>] Y. Li, V. Tsiminaki, R. Timofte, M. Pollefeys, and L. V. Gool, “3D appearance Super-Resolution with Deep Learning,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2019, pp. 9671–9680. [ <a href="http://openaccess.thecvf.com/content_CVPR_2019/html/Li_3D_Appearance_Super-Resolution_With_Deep_Learning_CVPR_2019_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]<br>
+[<i>Deng2021TIP</i>] X. Deng, Y. Zhang, M. Xu, S. Gu, and Y. Duan, “Deep Coupled FeedBack Network for Joint Exposure Fusion and Image Super- Resolution,” IEEE Transactions on Image Processing, vol. 30, no. 1, pp. 3098–3112, 2021. [ <a href="https://ieeexplore.ieee.org/abstract/document/9357931/">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]<br>
+[<i>Georgescu2023WACV</i>] M.-I. Georgescu, R. T. Ionescu, A.-I. Miron, O. Savencu, N.- C. Ristea, N. Verga, and F. S. Khan, “Multimodal Multi-Head Convolutional Attention with Various Kernel Sizes for Medical Image Super-Resolution,” in IEEEWinter Conference on Applications of Computer Vision (WCACV), 2023, pp. 2195–2205. [ <a href="https://openaccess.thecvf.com/content/WACV2023/html/Georgescu_Multimodal_Multi-Head_Convolutional_Attention_With_Various_Kernel_Sizes_for_Medical_WACV_2023_paper.html">paper</a>, <a href="https://docs.google.com/presentation/d/xxx">implementation</a> ]
 
 
 
