@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O2D-MedNet: An Optimization-Aware Dual-Domain Framework for Robust Medical Image Segmentation</title>
+  <style>
+    body {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 18px;
+      color: #111;
+      background: #fff;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 17px;
+      line-height: 1.45;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+
+    h2 {
+      margin-top: 24px;
+      margin-bottom: 10px;
+      font-size: 25px;
+    }
+
+    h3 {
+      margin-top: 20px;
+      margin-bottom: 7px;
+    }
+
+    a {
+      color: #0645ad;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .background-figure {
+      margin: 22px auto 26px;
+      text-align: center;
+    }
+
+    .background-figure img {
+      display: block;
+      width: 1000px;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    .background-figure figcaption {
+      max-width: 1000px;
+      margin: 8px auto 0;
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    .table-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+      border: 1px solid #bbb;
+      background: #fff;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-note {
+      margin: 8px 0 10px;
+      font-size: 15px;
+    }
+
+    .comparison-table {
+      width: 1720px;
+      min-width: 1720px;
+      margin: 0;
+      border-top: 2px solid #222;
+      border-bottom: 2px solid #222;
+      table-layout: fixed;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .comparison-table .group-column {
+      width: 130px;
+    }
+
+    .comparison-table .method-column {
+      width: 150px;
+    }
+
+    .comparison-table .metric-column {
+      width: 120px;
+    }
+
+    .table-caption {
+      margin: 10px 0;
+      text-align: center;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    table.comparison-table th,
+    table.comparison-table td {
+      padding: 5px 7px;
+      border: 0;
+      border-right: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .comparison-table th:last-child,
+    .comparison-table td:last-child {
+      border-right: 0;
+    }
+
+    .comparison-table thead th {
+      background: #f7f7f7;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+
+    .comparison-table thead tr:last-child th {
+      border-bottom: 2px solid #555;
+    }
+
+    .comparison-table .group-cell {
+      width: 130px;
+      padding: 8px 10px;
+      background: #fafafa;
+      font-style: italic;
+      text-align: center;
+      white-space: normal;
+      vertical-align: middle;
+    }
+
+    .comparison-table .method-cell {
+      width: 150px;
+      min-width: 0;
+      text-align: center;
+    }
+
+    .comparison-table .group-start > th,
+    .comparison-table .group-start > td {
+      border-top: 2px solid #555;
+    }
+
+    .comparison-table .ours-row th,
+    .comparison-table .ours-row td {
+      background: #fff8f8;
+      font-weight: bold;
+    }
+
+    .model-link {
+      color: #0645ad;
+      text-decoration: none;
+      border-bottom: 1px dotted currentColor;
+    }
+
+    .model-link:hover,
+    .model-link:focus-visible {
+      text-decoration: underline;
+    }
+
+    .metric-best {
+      color: #d3113a;
+      font-weight: bold;
+    }
+
+    .metric-second {
+      color: #1756c2;
+      font-weight: bold;
+    }
+
+    .section-nav {
+      margin: 18px 0;
+    }
+
+    .section-nav a {
+      margin: 0 10px;
+    }
+
+    th,
+    td {
+      padding: 7px 14px;
+      border: 1px solid #555;
+      text-align: center;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    .reference {
+      margin: 7px 0;
+      padding-left: 38px;
+      text-indent: -38px;
+      scroll-margin-top: 16px;
+    }
+
+    .reference:target {
+      padding-top: 4px;
+      padding-bottom: 4px;
+      background: #fff5bf;
+      outline: 2px solid #e0bd35;
+    }
+
+    .reference-links {
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body>
+
+<center>
+  <h1><i>O2D-MedNet</i>: An Optimization-Aware Dual-Domain Framework for Robust Medical Image Segmentation</h1>
+</center>
+
+<center>
+  <h3>Shipeng Hu, Miaohui Wang <i>et al.</i></h3>
+  <p>Will update the details of this work soon...</p>
+</center>
+
+<hr>
+<p style="text-align:justify">
+<a name="Abstract"><b>Abstract</b></a>- Medical image segmentation (MIS) remains challenging due to composite degradations and multi-scale geometric variations, which jointly impair lesion-background separability, structural consistency, and optimization stability. Existing single-stream frameworks entangle heterogeneous cues within a single representation pathway, while hybrid-stream approaches often rely on generic or static fusion, limiting effective coordination across domains and failing to explicitly address optimization instability. To overcome these limitations, we propose a new optimization-aware dual-domain framework for MIS (<i>O2D-MedNet</i>). First, a dynamic dual-domain interaction (DDI) module integrates <i>Fourier</i>- and <i>Wavelet</i>-domain features to suppress degradation-sensitive responses while preserving structural and fine-detail information. Second, a cross-backbone contour-guided fusion (CGF) module enables selective interaction between CNN-based local detail modeling and visual state-space-based global structure modeling, improving boundary accuracy and representation consistency. Third, a gradient-context optimization (GCO) strategy stabilizes training by adaptively adjusting learning dynamics based on loss trends and gradient statistics, mitigating instability caused by class imbalance and heterogeneous sample difficulty. Extensive experiments on six benchmarks demonstrate consistent improvements over state-of-the-art MIS methods across multiple imaging modalities. Further analyses confirm enhanced sensitivity, structural consistency, and optimization stability, validating the effectiveness of the proposed <i>O2D-MedNet</i> for robust MIS under heterogeneous conditions.
+</p>
+
+<p>
+<b>Index Terms</b>&mdash;Medical image segmentation, dual-domain modeling, cross-backbone fusion, optimization stability
+</p>
+
+<center class="section-nav">
+  [<a href="#Background">I. Background</a>]
+  [<a href="#Method">II. Methodology</a>]
+  [<a href="#Experiments">III. Experiments</a>]
+</center>
+
+<br>
+<hr>
+<h2 id="Background">Dataset and Source Code Downloads</h2>
+[<a href="https://drive.google.com/file/d/118E1L5hyf4Uc0L03Yfc3wGVjmmSLgjFh/view?usp=sharing" target="_blank">Oral Dataset</a>]
+<br>
+[<a href="https://drive.google.com/file/d/1-1fO7_7eIppVB9Jz8DszsMjezGef9iq0/view?usp=sharing" target="_blank">COVID-19 Dataset</a>]
+<br>
+[<a href="https://drive.google.com/file/d/17gQRhtuAk8rS4u8CxuRlN63-TitfXbK6/view?usp=sharing" target="_blank">CT2US Dataset</a>]
+<br>
+[<a href="https://drive.google.com/file/d/1yCd71i94eTdFib9tjTOrz0YNhnImcRg8/view?usp=sharing" target="_blank">BUSI Dataset</a>]
+<br>
+[<a href="https://drive.google.com/file/d/1U9M0Y4H4QH4MzwEgnvCFUt6eLkXQGDAV/view?usp=sharing" target="_blank">Kvasir-SEG Dataset</a>]
+<br>
+[<a href="https://drive.google.com/file/d/1F-pyhiURVLe6sVm4RpPWs94TJb7Cs0QG/view?usp=sharing" target="_blank">MLUA Dataset</a>]
+<br>
+[<a href="https://drive.google.com/drive/folders/1B1nR1Ggg-Mzb0mLfTY7IQKm6hnokADiW?usp=sharing" target="_blank">Source Code</a>]
+<br>
+
+<br>
+<hr>
+<h2 id="Background">I. Background</h2>
+
+<p style="text-align:justify">
+Medical image segmentation assigns semantic labels to pixels or voxels for the accurate delineation of lesions and anatomical structures, supporting disease screening, diagnosis, treatment planning, and longitudinal assessment. However, the growing volume and diversity of optical, radiological, and ultrasound data make manual inspection increasingly time-consuming and error-prone.
+</p>
+
+
+<p style="text-align:justify">
+Robust segmentation remains challenging because composite degradations, including noise, artifacts, and specular reflections, often coexist with multi-scale variations in anatomical size, shape, and location. These factors jointly reduce lesion-background separability, disrupt structural consistency, destabilize optimization, and make it difficult to preserve fine boundaries while maintaining global coherence.
+</p>
+
+<p style="text-align:justify">
+Existing single-stream methods entangle degradation suppression, representation learning, and optimization within one pathway, while hybrid-stream approaches commonly rely on static or heuristic feature fusion. This coupled treatment limits adaptive coordination among degradation-sensitive responses, local details, global structures, and training dynamics under heterogeneous imaging conditions. <i>O2D-MedNet</i> addresses these limitations through a progressive design that explicitly decouples degradation suppression, representation interaction, and optimization dynamics.
+</p>
+
+<figure class="background-figure">
+  <img src="./O2D-MedNet_files/figure1.png" width="1000" height="332" alt="Framework-level comparison of single-stream, hybrid-stream, and the proposed O2D-MedNet medical image segmentation paradigms">
+  <figcaption><b>Fig. 1: Framework-level comparison of representative medical image segmentation paradigms.</b> (a) Single-stream frameworks process original or domain-based inputs through a single pathway. (b) Hybrid-stream frameworks introduce multiple backbone branches and generic feature fusion. (c) <i>O2D-MedNet</i> combines dual-domain refinement, explicit local-global decoupling, contour-guided selective fusion, and optimization-aware learning in a unified framework.</figcaption>
+</figure>
+
+<br>
+<hr>
+<h2 id="Method">II. Methodology</h2>
+
+<p style="text-align:justify">
+<i>O2D-MedNet</i> follows a progressive design that explicitly decouples degradation suppression, representation learning, and optimization dynamics. DDI first refines the input through complementary Fourier- and Wavelet-domain processing; parallel CNN and VSSM branches then model local details and global structure, CGF enables selective cross-backbone interaction, and GCO adapts training behavior according to gradient context. <b>Algorithm 1</b> summarizes the overall training and inference procedures.
+</p>
+
+<ol>
+  <li><b>DDI:</b> refine degradation-sensitive representations in complementary Fourier and Wavelet domains.</li>
+  <li><b>CGF:</b> selectively coordinate CNN-based local details with VSSM-based global structure.</li>
+  <li><b>GCO:</b> adapt the learning-rate schedule using loss evolution and gradient statistics.</li>
+</ol>
+
+<br>
+<center>
+  <img src="./O2D-MedNet_files/framework.png" width="1000" alt="Overview of the O2D-MedNet framework">
+  <br>
+  <b>Fig. 2: Overview of <i>O2D-MedNet</i>.</b> DDI performs dual-domain feature refinement, CGF coordinates the CNN and VSSM branches, and GCO adaptively controls the training process.
+</center>
+
+
+<br>
+<center>
+  <img src="./O2D-MedNet_files/algorithm-1.png" width="650" alt="Algorithm 2 pseudocode for the Gradient-Context Optimizer">
+  <br>
+  <b>Algorithm 1: Training Procedure of O2D-MedNet.</b>
+</center>
+
+
+<br>
+
+<h3>2.1 Degradation-Aware Dual-Domain Interaction (DDI)</h3>
+<p style="text-align:justify">
+DDI jointly exploits Fourier-domain global spectral structure and Wavelet-domain localized multi-resolution detail to improve feature separability before high-level modeling. Similarity-aware sample gating and bidirectional spatial modulation suppress degradation-sensitive responses while preserving structural consistency and boundary-relevant cues.
+</p>
+
+<br>
+<center>
+  <img src="./O2D-MedNet_files/ddi-module.png" width="1000" alt="Illustration of the DDI module">
+  <br>
+  <b>Fig. 3: Illustration of the proposed DDI module.</b> Fourier- and Wavelet-domain responses are adaptively fused and spatially modulated to improve lesion-background separability.
+</center>
+
+<br>
+
+<h3>2.2 Cross-Backbone Contour-Guided Fusion (CGF)</h3>
+<p style="text-align:justify">
+CGF performs selective, structure-aware interaction between CNN local-detail features and VSSM global-structure representations at corresponding network stages. Gaussian-residual contour responses guide spatial fusion, while shift-based and local-attention refinement produces local-consistency modulation and stage-specific features that are reinjected into both branches.
+</p>
+
+<br>
+<center>
+      <img src="./O2D-MedNet_files/cgf-module.png" width="1000" alt="Illustration of the CGF module">
+  <br>
+  <b>Fig. 4: Illustration of the proposed CGF module.</b> Contour-guided selective fusion coordinates CNN and VSSM features, followed by local-consistency feature refinement.
+</center>
+
+<br>
+
+<h3>2.3 Gradient-Context Optimization (GCO)</h3>
+<p style="text-align:justify">
+GCO formulates learning-rate scheduling as an adaptive decision process driven by gradient context. At each epoch, loss progress, gradient stability, and recent learning-rate history define a discrete state; an online epsilon-greedy Q-learning controller selects the next learning rate and learns from loss trends, short-term loss reduction, and gradient-context stability, as provided in <b>Algorithm 2</b>.
+</p>
+
+<br>
+<center>
+  <img src="./O2D-MedNet_files/algorithm-2.png" width="650" alt="Algorithm 2 pseudocode for the Gradient-Context Optimizer">
+  <br>
+  <b>Algorithm 2: Gradient-Context Optimizer (GCO).</b>
+</center>
+
+
+
+
+
+<br>
+<hr>
+<h2 id="Experiments">III. Experiments</h2>
+
+<p style="text-align:justify">
+The experiments evaluate three aspects of <i>O2D-MedNet</i>: robustness under heterogeneous degradations, the effectiveness of local-global decoupling and selective cross-backbone interaction, and the contribution of optimization-aware training to convergence stability.
+</p>
+
+
+<h3>3.1 Datasets and Experimental Protocol</h3>
+<p>
+<b>Datasets:</b> Six 2D medical image segmentation benchmarks spanning three imaging modalities are used:
+</p>
+
+<ul>
+  <li><b>Optical RGB:</b> <a href="https://drive.google.com/file/d/118E1L5hyf4Uc0L03Yfc3wGVjmmSLgjFh/view?usp=sharing" target="_blank">Oral</a> contains 1,278 expert-annotated oral mucosal images, and <a href="https://drive.google.com/file/d/1U9M0Y4H4QH4MzwEgnvCFUt6eLkXQGDAV/view?usp=sharing" target="_blank">Kvasir-SEG</a> contains 1,000 endoscopic polyp images.</li>
+  <li><b>Radiological:</b> <a href="https://drive.google.com/file/d/1-1fO7_7eIppVB9Jz8DszsMjezGef9iq0/view?usp=sharing" target="_blank">COVID-19</a> contains 2,729 annotated CT images, and <a href="https://drive.google.com/file/d/1F-pyhiURVLe6sVm4RpPWs94TJb7Cs0QG/view?usp=sharing" target="_blank">MLUA</a> provides panoramic X-ray images for caries segmentation.</li>
+  <li><b>Ultrasound:</b> <a href="https://drive.google.com/file/d/17gQRhtuAk8rS4u8CxuRlN63-TitfXbK6/view?usp=sharing" target="_blank">CT2US</a> contains 4,586 kidney segmentation samples, and <a href="https://drive.google.com/file/d/1yCd71i94eTdFib9tjTOrz0YNhnImcRg8/view?usp=sharing" target="_blank">BUSI</a> contains 780 breast ultrasound images from 600 patients.</li>
+</ul>
+
+<p style="text-align:justify">
+<b>Implementation.</b> <i>O2D-MedNet</i> is implemented in PyTorch and trained with Adam using an initial learning rate of 1 &times; 10<sup>-3</sup> and a weight decay of 1 &times; 10<sup>-2</sup>. Images are resized to 224 &times; 224, replicated to three channels when necessary, and normalized to [0, 1]. Five-fold cross-validation is used, with one fold for testing and four folds for training. Models are optimized with BCEWithLogitsLoss for 500 epochs using a batch size of 4, while GCO adaptively controls the learning-rate schedule. Experiments are conducted on an Intel i9-10980XE CPU and an NVIDIA GeForce RTX 4090 GPU.
+</p>
+
+<p style="text-align:justify">
+<b>Evaluation metrics.</b> Dice and mIoU measure region overlap, Sensitivity evaluates foreground detection, and Betti Error measures topological consistency. The benchmark table below reports mean &plusmn; standard deviation across five-fold cross-validation; all values are percentages.
+</p>
+
+
+
+
+<h3>3.2 Quantitative Results</h3>
+<p>
+<i>O2D-MedNet</i> reports the highest mIoU and Dice scores across all six benchmarks in the manuscript comparison.
+</p>
+
+<p class="table-note"><b>Navigation:</b> Click a model name to jump to its corresponding reference below. Scroll horizontally to view all six datasets on smaller screens.</p>
+
+<p id="table1-caption" class="table-caption"><b>Table 1.</b> Quantitative comparison in terms of mIoU and Dice on the Oral, Kvasir-SEG, COVID-19, MLUA, CT2US, and BUSI datasets. Comparison methods are grouped into Reference Baselines, Single-stream Frameworks, and Hybrid-stream Frameworks. The best and second-best results in each column are highlighted in <span class="metric-best">red</span> and <span class="metric-second">blue</span>, respectively.</p>
+
+<div class="table-wrap" role="region" aria-label="Scrollable quantitative comparison table" tabindex="0">
+<table class="comparison-table" aria-describedby="table1-caption">
+  <caption class="sr-only">Table 1 quantitative comparison across six medical image segmentation datasets.</caption>
+  <colgroup>
+    <col class="group-column">
+    <col class="method-column">
+    <col class="metric-column" span="12">
+  </colgroup>
+  <thead>
+    <tr>
+      <th scope="col" rowspan="3">Group</th>
+      <th scope="col" rowspan="3">Method</th>
+      <th scope="colgroup" colspan="4">Optical RGB Dataset</th>
+      <th scope="colgroup" colspan="4">Radiological Dataset</th>
+      <th scope="colgroup" colspan="4">Ultrasound Dataset</th>
+    </tr>
+    <tr>
+      <th scope="colgroup" colspan="2">Oral</th>
+      <th scope="colgroup" colspan="2">Kvasir-SEG</th>
+      <th scope="colgroup" colspan="2">COVID-19</th>
+      <th scope="colgroup" colspan="2">MLUA</th>
+      <th scope="colgroup" colspan="2">CT2US</th>
+      <th scope="colgroup" colspan="2">BUSI</th>
+    </tr>
+    <tr>
+      <th scope="col">mIoU &uarr;</th><th scope="col">Dice &uarr;</th>
+      <th scope="col">mIoU &uarr;</th><th scope="col">Dice &uarr;</th>
+      <th scope="col">mIoU &uarr;</th><th scope="col">Dice &uarr;</th>
+      <th scope="col">mIoU &uarr;</th><th scope="col">Dice &uarr;</th>
+      <th scope="col">mIoU &uarr;</th><th scope="col">Dice &uarr;</th>
+      <th scope="col">mIoU &uarr;</th><th scope="col">Dice &uarr;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="rowgroup" rowspan="5" class="group-cell">Reference<br>Baselines</th>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-u2net">U<sup>2</sup>Net</a></th>
+      <td>82.3 &plusmn; 3.1</td><td>90.3 &plusmn; 1.7</td><td>78.5 &plusmn; 3.8</td><td>88.0 &plusmn; 3.2</td><td class="metric-second">79.4 &plusmn; 3.8</td><td class="metric-second">88.5 &plusmn; 3.3</td><td>59.5 &plusmn; 5.8</td><td>68.5 &plusmn; 5.2</td><td>95.3 &plusmn; 4.0</td><td>97.6 &plusmn; 2.7</td><td>61.9 &plusmn; 4.1</td><td>76.4 &plusmn; 3.6</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-deeplabv3-plus">Deeplabv3+</a></th>
+      <td>81.6 &plusmn; 2.3</td><td>89.8 &plusmn; 1.4</td><td>50.1 &plusmn; 6.7</td><td>66.8 &plusmn; 6.1</td><td>78.3 &plusmn; 4.6</td><td>87.8 &plusmn; 4.3</td><td>59.1 &plusmn; 4.8</td><td>74.3 &plusmn; 4.6</td><td>95.1 &plusmn; 3.9</td><td>97.5 &plusmn; 1.7</td><td>61.1 &plusmn; 5.6</td><td>75.8 &plusmn; 5.6</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-sfm">SFM</a></th>
+      <td>70.0 &plusmn; 3.0</td><td>82.4 &plusmn; 2.4</td><td>68.8 &plusmn; 5.1</td><td>81.5 &plusmn; 4.7</td><td>75.4 &plusmn; 5.3</td><td>85.9 &plusmn; 3.2</td><td>45.6 &plusmn; 6.2</td><td>62.6 &plusmn; 5.6</td><td>94.4 &plusmn; 2.1</td><td>97.1 &plusmn; 1.4</td><td>58.7 &plusmn; 3.9</td><td>74.0 &plusmn; 3.6</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-thernet">TherNet</a></th>
+      <td>82.5 &plusmn; 2.9</td><td>90.4 &plusmn; 1.9</td><td>74.4 &plusmn; 3.8</td><td>85.3 &plusmn; 2.9</td><td>78.3 &plusmn; 2.9</td><td>87.8 &plusmn; 2.5</td><td>46.9 &plusmn; 6.7</td><td>63.8 &plusmn; 6.7</td><td>95.0 &plusmn; 4.1</td><td>97.4 &plusmn; 2.2</td><td>50.9 &plusmn; 6.8</td><td>67.4 &plusmn; 6.4</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-mwcnn">MWCNN</a></th>
+      <td>78.6 &plusmn; 3.5</td><td>88.0 &plusmn; 2.6</td><td>70.8 &plusmn; 4.6</td><td>82.9 &plusmn; 3.6</td><td>71.4 &plusmn; 4.1</td><td>83.3 &plusmn; 3.4</td><td>40.8 &plusmn; 7.2</td><td>58.0 &plusmn; 6.8</td><td>94.8 &plusmn; 3.8</td><td>97.3 &plusmn; 1.9</td><td>40.5 &plusmn; 7.6</td><td>57.6 &plusmn; 7.3</td>
+    </tr>
+
+    <tr class="group-start">
+      <th scope="rowgroup" rowspan="20" class="group-cell">Single-stream<br>Frameworks</th>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-bcdu-net">BCDU-Net</a></th>
+      <td>85.8 &plusmn; 2.6</td><td>92.3 &plusmn; 1.6</td><td>72.6 &plusmn; 4.7</td><td>84.1 &plusmn; 3.8</td><td>78.8 &plusmn; 3.0</td><td>88.1 &plusmn; 2.7</td><td>58.2 &plusmn; 5.7</td><td>73.6 &plusmn; 4.4</td><td>94.4 &plusmn; 3.3</td><td>97.1 &plusmn; 2.1</td><td>58.1 &plusmn; 5.3</td><td>73.5 &plusmn; 4.8</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-mtg-net">MTG-Net</a></th>
+      <td>73.1 &plusmn; 7.4</td><td>81.2 &plusmn; 4.0</td><td>68.5 &plusmn; 8.5</td><td>74.4 &plusmn; 5.9</td><td>72.4 &plusmn; 6.7</td><td>76.6 &plusmn; 4.8</td><td>59.6 &plusmn; 6.9</td><td>74.7 &plusmn; 6.1</td><td>74.1 &plusmn; 6.0</td><td>85.1 &plusmn; 2.9</td><td>48.2 &plusmn; 7.9</td><td>55.3 &plusmn; 6.4</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-medt">MedT</a></th>
+      <td>68.4 &plusmn; 5.4</td><td>75.2 &plusmn; 1.9</td><td>67.9 &plusmn; 4.2</td><td>80.8 &plusmn; 3.9</td><td>76.8 &plusmn; 2.8</td><td>86.9 &plusmn; 2.5</td><td>54.3 &plusmn; 6.6</td><td>61.0 &plusmn; 4.9</td><td>69.3 &plusmn; 6.6</td><td>81.8 &plusmn; 4.3</td><td>50.2 &plusmn; 6.6</td><td>66.8 &plusmn; 6.0</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-fat-net">FAT-Net</a></th>
+      <td>83.3 &plusmn; 3.5</td><td>90.9 &plusmn; 2.2</td><td>78.0 &plusmn; 3.6</td><td>87.6 &plusmn; 3.6</td><td>78.1 &plusmn; 4.6</td><td>87.7 &plusmn; 3.6</td><td>60.4 &plusmn; 4.9</td><td>75.3 &plusmn; 5.0</td><td>95.3 &plusmn; 3.5</td><td>97.6 &plusmn; 2.1</td><td>58.6 &plusmn; 4.6</td><td>73.9 &plusmn; 4.2</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-missformer">MISSFormer</a></th>
+      <td>67.5 &plusmn; 2.5</td><td>80.6 &plusmn; 1.6</td><td>75.8 &plusmn; 2.3</td><td>86.2 &plusmn; 2.3</td><td>76.4 &plusmn; 3.1</td><td>86.6 &plusmn; 2.8</td><td>44.9 &plusmn; 6.8</td><td>62.0 &plusmn; 6.3</td><td>94.3 &plusmn; 3.7</td><td>97.0 &plusmn; 0.9</td><td>55.9 &plusmn; 4.1</td><td>71.7 &plusmn; 3.6</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-levit-unet">LeViTUNet</a></th>
+      <td class="metric-second">86.9 &plusmn; 2.4</td><td class="metric-second">93.0 &plusmn; 1.2</td><td>76.5 &plusmn; 3.0</td><td>86.7 &plusmn; 2.5</td><td>78.6 &plusmn; 3.6</td><td>88.0 &plusmn; 2.9</td><td>59.4 &plusmn; 6.3</td><td>74.5 &plusmn; 5.5</td><td>95.2 &plusmn; 3.2</td><td>97.5 &plusmn; 1.8</td><td>60.9 &plusmn; 5.3</td><td>75.7 &plusmn; 4.1</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-swin-unet">Swin-UNet</a></th>
+      <td>62.1 &plusmn; 5.1</td><td>69.2 &plusmn; 3.8</td><td>69.9 &plusmn; 7.0</td><td>77.1 &plusmn; 6.2</td><td>72.1 &plusmn; 5.5</td><td>83.8 &plusmn; 5.8</td><td>43.2 &plusmn; 6.6</td><td>53.3 &plusmn; 5.7</td><td>92.1 &plusmn; 5.5</td><td>95.8 &plusmn; 2.5</td><td>46.3 &plusmn; 8.5</td><td>51.7 &plusmn; 8.3</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-cycoseg">CyCoSeg</a></th>
+      <td>66.5 &plusmn; 4.5</td><td>79.9 &plusmn; 3.0</td><td>68.6 &plusmn; 4.2</td><td>81.3 &plusmn; 3.1</td><td>75.2 &plusmn; 4.7</td><td>85.9 &plusmn; 4.1</td><td>47.1 &plusmn; 7.1</td><td>64.0 &plusmn; 5.8</td><td>94.1 &plusmn; 3.4</td><td>96.9 &plusmn; 1.6</td><td>57.9 &plusmn; 5.9</td><td>73.3 &plusmn; 4.7</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-mamba-unet">Mamba-UNet</a></th>
+      <td>80.9 &plusmn; 3.0</td><td>89.4 &plusmn; 1.8</td><td>78.1 &plusmn; 4.5</td><td>87.7 &plusmn; 4.2</td><td>76.0 &plusmn; 5.5</td><td>86.3 &plusmn; 3.1</td><td>58.4 &plusmn; 5.6</td><td>73.7 &plusmn; 5.2</td><td>94.7 &plusmn; 3.8</td><td>97.3 &plusmn; 2.0</td><td>61.6 &plusmn; 5.2</td><td>76.2 &plusmn; 5.1</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-ultralight-vm">UltraLightVM</a></th>
+      <td>79.4 &plusmn; 3.7</td><td>88.5 &plusmn; 2.0</td><td>79.6 &plusmn; 3.9</td><td>88.6 &plusmn; 3.7</td><td>78.9 &plusmn; 3.9</td><td>88.2 &plusmn; 5.3</td><td>60.4 &plusmn; 4.8</td><td>75.3 &plusmn; 4.4</td><td>94.6 &plusmn; 4.5</td><td>97.2 &plusmn; 2.5</td><td>54.8 &plusmn; 4.2</td><td>70.8 &plusmn; 3.7</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-lkm-unet">LKM-UNet</a></th>
+      <td>86.4 &plusmn; 2.2</td><td>92.7 &plusmn; 1.5</td><td>79.5 &plusmn; 3.3</td><td>88.6 &plusmn; 2.8</td><td>79.3 &plusmn; 3.6</td><td>88.4 &plusmn; 3.4</td><td>59.5 &plusmn; 6.4</td><td>74.6 &plusmn; 5.5</td><td class="metric-second">95.7 &plusmn; 2.9</td><td class="metric-second">97.8 &plusmn; 2.2</td><td>60.2 &plusmn; 6.6</td><td>75.1 &plusmn; 6.3</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-h-vmunet">H-vmuNet</a></th>
+      <td>83.1 &plusmn; 2.5</td><td>90.8 &plusmn; 1.8</td><td>72.7 &plusmn; 4.7</td><td>84.2 &plusmn; 3.6</td><td>77.5 &plusmn; 3.2</td><td>87.3 &plusmn; 2.5</td><td>52.5 &plusmn; 5.6</td><td>68.9 &plusmn; 4.7</td><td>95.3 &plusmn; 3.3</td><td>97.6 &plusmn; 2.1</td><td>63.1 &plusmn; 5.8</td><td>77.4 &plusmn; 5.3</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-mamba-sea">Mamba-Sea</a></th>
+      <td>75.7 &plusmn; 6.4</td><td>83.1 &plusmn; 4.0</td><td>75.4 &plusmn; 7.3</td><td>82.3 &plusmn; 5.7</td><td>63.4 &plusmn; 5.4</td><td>73.6 &plusmn; 6.4</td><td>55.5 &plusmn; 5.9</td><td>71.4 &plusmn; 5.3</td><td>94.9 &plusmn; 1.8</td><td>97.3 &plusmn; 1.3</td><td>54.2 &plusmn; 8.5</td><td>61.0 &plusmn; 8.8</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-fusionnet">FusionNet</a></th>
+      <td>77.3 &plusmn; 4.3</td><td>87.2 &plusmn; 2.4</td><td>78.4 &plusmn; 2.9</td><td>88.1 &plusmn; 2.4</td><td>77.1 &plusmn; 3.6</td><td>87.1 &plusmn; 4.1</td><td>60.0 &plusmn; 6.0</td><td>75.0 &plusmn; 4.8</td><td>95.2 &plusmn; 1.5</td><td>97.5 &plusmn; 1.0</td><td>61.6 &plusmn; 4.6</td><td>76.3 &plusmn; 4.2</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-mbp-ssnet">MBP-SSNet</a></th>
+      <td>81.5 &plusmn; 2.1</td><td>89.8 &plusmn; 2.1</td><td>71.1 &plusmn; 3.1</td><td>83.1 &plusmn; 2.6</td><td>75.4 &plusmn; 3.7</td><td>85.9 &plusmn; 3.0</td><td>63.3 &plusmn; 5.8</td><td>77.5 &plusmn; 5.0</td><td>92.1 &plusmn; 3.5</td><td>95.9 &plusmn; 2.5</td><td>56.2 &plusmn; 4.8</td><td>72.0 &plusmn; 4.5</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-eag-sae-estf">EAG-SAE-ESTF</a></th>
+      <td>74.9 &plusmn; 2.5</td><td>85.6 &plusmn; 1.8</td><td>79.0 &plusmn; 2.5</td><td>88.3 &plusmn; 2.2</td><td>77.7 &plusmn; 2.8</td><td>87.4 &plusmn; 2.6</td><td>61.1 &plusmn; 4.9</td><td>75.9 &plusmn; 4.2</td><td>95.4 &plusmn; 2.8</td><td>97.6 &plusmn; 1.1</td><td>63.7 &plusmn; 4.0</td><td>77.8 &plusmn; 3.6</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-gobletnet">GobletNet</a></th>
+      <td>85.3 &plusmn; 2.2</td><td>92.0 &plusmn; 1.3</td><td class="metric-second">80.0 &plusmn; 2.8</td><td class="metric-second">88.9 &plusmn; 2.2</td><td>79.0 &plusmn; 2.8</td><td>88.2 &plusmn; 2.3</td><td>55.1 &plusmn; 4.9</td><td>71.1 &plusmn; 4.5</td><td>95.0 &plusmn; 2.5</td><td>97.4 &plusmn; 1.1</td><td class="metric-second">65.3 &plusmn; 3.8</td><td class="metric-second">79.0 &plusmn; 4.2</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-madgnet">MADGNet</a></th>
+      <td>82.4 &plusmn; 2.6</td><td>90.3 &plusmn; 1.4</td><td>77.6 &plusmn; 3.3</td><td>87.4 &plusmn; 2.9</td><td>78.9 &plusmn; 4.3</td><td>88.2 &plusmn; 4.6</td><td>61.3 &plusmn; 5.1</td><td>76.0 &plusmn; 3.6</td><td>95.1 &plusmn; 3.0</td><td>97.5 &plusmn; 2.1</td><td>60.8 &plusmn; 3.7</td><td>75.6 &plusmn; 3.1</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-fftmed">FFTMed</a></th>
+      <td>51.9 &plusmn; 4.9</td><td>68.4 &plusmn; 3.0</td><td>51.4 &plusmn; 5.5</td><td>67.9 &plusmn; 6.1</td><td>69.9 &plusmn; 5.9</td><td>82.3 &plusmn; 4.5</td><td>59.1 &plusmn; 5.7</td><td>65.1 &plusmn; 5.3</td><td>93.6 &plusmn; 1.9</td><td>96.7 &plusmn; 1.9</td><td>54.6 &plusmn; 4.3</td><td>70.6 &plusmn; 4.7</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-cswin-unet">CSWin-UNet</a></th>
+      <td>66.4 &plusmn; 5.3</td><td>70.2 &plusmn; 2.0</td><td>70.9 &plusmn; 7.3</td><td>78.6 &plusmn; 5.7</td><td>59.9 &plusmn; 3.5</td><td>71.2 &plusmn; 5.4</td><td>55.6 &plusmn; 5.4</td><td>71.4 &plusmn; 4.6</td><td>80.5 &plusmn; 4.2</td><td>85.4 &plusmn; 3.7</td><td>58.8 &plusmn; 3.9</td><td>74.1 &plusmn; 3.5</td>
+    </tr>
+
+    <tr class="group-start">
+      <th scope="rowgroup" rowspan="5" class="group-cell">Hybrid-stream<br>Frameworks</th>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-transfuse">TransFuse</a></th>
+      <td>83.1 &plusmn; 2.4</td><td>90.7 &plusmn; 1.6</td><td>78.1 &plusmn; 2.6</td><td>87.7 &plusmn; 2.4</td><td>78.2 &plusmn; 4.6</td><td>87.8 &plusmn; 3.7</td><td>60.3 &plusmn; 4.8</td><td>75.2 &plusmn; 4.2</td><td>95.1 &plusmn; 3.1</td><td>97.4 &plusmn; 2.2</td><td>62.7 &plusmn; 5.3</td><td>77.1 &plusmn; 5.1</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-h2former">H2Former</a></th>
+      <td>80.1 &plusmn; 2.7</td><td>88.9 &plusmn; 1.7</td><td>72.3 &plusmn; 3.6</td><td>83.9 &plusmn; 2.7</td><td>78.2 &plusmn; 2.9</td><td>87.7 &plusmn; 2.6</td><td>59.7 &plusmn; 6.7</td><td>74.7 &plusmn; 5.3</td><td>95.3 &plusmn; 2.6</td><td>97.6 &plusmn; 2.1</td><td>57.3 &plusmn; 5.7</td><td>72.9 &plusmn; 5.9</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-mambaeviscrib">MambaEviScrib</a></th>
+      <td>76.8 &plusmn; 2.7</td><td>86.9 &plusmn; 1.4</td><td>78.8 &plusmn; 3.5</td><td>88.2 &plusmn; 3.1</td><td>77.7 &plusmn; 3.0</td><td>87.5 &plusmn; 2.4</td><td>59.7 &plusmn; 5.6</td><td>74.8 &plusmn; 5.1</td><td>95.2 &plusmn; 3.3</td><td>97.5 &plusmn; 1.6</td><td>60.8 &plusmn; 5.0</td><td>75.6 &plusmn; 4.3</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-xnet">XNet</a></th>
+      <td>85.0 &plusmn; 2.7</td><td>91.9 &plusmn; 2.0</td><td>79.0 &plusmn; 3.2</td><td>88.2 &plusmn; 3.0</td><td>78.9 &plusmn; 3.4</td><td>88.2 &plusmn; 3.7</td><td class="metric-second">64.1 &plusmn; 4.8</td><td class="metric-second">78.1 &plusmn; 4.1</td><td>95.3 &plusmn; 3.1</td><td>97.6 &plusmn; 1.5</td><td>63.1 &plusmn; 6.5</td><td>77.4 &plusmn; 5.8</td>
+    </tr>
+    <tr>
+      <th scope="row" class="method-cell"><a class="model-link" href="#ref-ds2f">DS2F</a></th>
+      <td>78.9 &plusmn; 2.1</td><td>88.2 &plusmn; 1.5</td><td>75.8 &plusmn; 2.9</td><td>86.2 &plusmn; 2.6</td><td>78.1 &plusmn; 3.3</td><td>87.7 &plusmn; 2.5</td><td>50.9 &plusmn; 6.3</td><td>67.5 &plusmn; 5.3</td><td>94.5 &plusmn; 2.3</td><td>97.1 &plusmn; 1.7</td><td>60.4 &plusmn; 4.6</td><td>75.3 &plusmn; 4.2</td>
+    </tr>
+
+    <tr class="group-start ours-row">
+      <th scope="rowgroup" class="group-cell">Ours</th>
+      <th scope="row" class="method-cell"><i>O2D-MedNet</i></th>
+      <td class="metric-best">91.9 &plusmn; 1.9</td><td class="metric-best">96.8 &plusmn; 1.1</td><td class="metric-best">83.4 &plusmn; 2.3</td><td class="metric-best">90.9 &plusmn; 2.1</td><td class="metric-best">82.6 &plusmn; 2.5</td><td class="metric-best">90.4 &plusmn; 2.1</td><td class="metric-best">67.9 &plusmn; 4.5</td><td class="metric-best">80.9 &plusmn; 3.1</td><td class="metric-best">96.2 &plusmn; 1.2</td><td class="metric-best">98.0 &plusmn; 0.9</td><td class="metric-best">69.3 &plusmn; 3.5</td><td class="metric-best">81.9 &plusmn; 3.1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<br>
+<h3>3.3 Qualitative Results</h3>
+<p style="text-align:justify">
+Across optical, radiological, and ultrasound images, <i>O2D-MedNet</i> produces predictions that are more consistent with the ground truth, with cleaner boundaries, fewer false positives, and fewer missed regions.
+</p>
+<center>
+  <img src="./O2D-MedNet_files/qualitative.png" width="1000" alt="Qualitative segmentation comparison across optical, radiological, and ultrasound images">
+  <br>
+  <b>Fig. 6: Qualitative comparison across different medical imaging modalities.</b> White indicates correct overlap, red indicates false positives, and green indicates false negatives.
+</center>
+
+
+<p style="text-align:justify">
+For optical RGB images, the model suppresses interference from illumination variations and specular reflections. For radiological images, it better preserves weak and blurred lesion boundaries. For ultrasound images, it reduces errors associated with speckle noise, intensity inhomogeneity, and complex textures.
+</p>
+
+<br>
+<hr>
+<a name="References"><b>References for Comparison Methods (30)</b></a>
+<br>
+
+<p><b>Reference Baselines (5)</b></p>
+
+<p id="ref-u2net" class="reference">[U2Net] X. Qin, Z. Zhang, C. Huang, M. Dehghan, O. R. Zaiane, and M. Jagersand, &ldquo;U2-Net: Going Deeper with Nested U-structure for Salient Object Detection,&rdquo; <i>Elsevier Pattern recognition</i>, vol. 106, pp. 1-12, 2020. <span class="reference-links">[<a href="https://arxiv.org/abs/2005.09007" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/xuebinqin/U-2-Net" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-deeplabv3-plus" class="reference">[Deeplabv3+] L.-C. Chen, Y. Zhu, G. Papandreou, F. Schroff, and H. Adam, &ldquo;Encoder-Decoder With Atrous Separable Convolution for Semantic Image Segmentation,&rdquo; in <i>Proceedings of the European conference on computer vision (ECCV)</i>, 2018, pp. 801-818. <span class="reference-links">[<a href="https://arxiv.org/abs/1802.02611" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/tensorflow/models/tree/master/research/deeplab" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-sfm" class="reference">[SFM] L. Chen, Y. Fu, L. Gu, D. Zheng, and J. Dai, &ldquo;Spatial Frequency Modulation for Semantic Segmentation,&rdquo; <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>, vol. 47, no. 11, pp. 9767-9784, 2025. <span class="reference-links">[<a href="https://arxiv.org/abs/2507.11893" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/Linwei-Chen/SFM" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-thernet" class="reference">[TherNet] J. Chen, S. Shu, C. Meng, and X. Bai, &ldquo;TherNet: Thermal Segmentation Network Harnessing Physical Properties,&rdquo; <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>, vol. 47, no. 12, pp. 11768-11784, 2025. <span class="reference-links">[<a href="https://doi.org/10.1109/TPAMI.2025.3598949" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/mzzcdf/TherNetV1" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-mwcnn" class="reference">[MWCNN] P. Liu, H. Zhang, K. Zhang, L. Lin, and W. Zuo, &ldquo;Multi-Level Wavelet-CNN for Image Restoration,&rdquo; in <i>Proceedings of the IEEE/CVF International Conference on Computer Vision (CVPR) Workshops</i>, 2018, pp. 773-782. <span class="reference-links">[<a href="https://arxiv.org/abs/1805.07071" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/lpj0/MWCNN" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p><b>Single-stream Frameworks (20)</b></p>
+
+<p id="ref-bcdu-net" class="reference">[BCDU-Net] R. Azad, M. Asadi-Aghbolaghi, M. Fathy, and S. Escalera, &ldquo;Bi-Directional ConvLSTM U-Net with Densley Connected Convolutions,&rdquo; in <i>Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) Workshops</i>, 2019, pp. 1-10. <span class="reference-links">[<a href="https://arxiv.org/abs/1909.00166" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/rezazad68/BCDU-Net" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-mtg-net" class="reference">[MTG-Net] T. Chen, D. Zhang, D. Chen, H. Fu, K. Jin, S. Wang, L. D. Cohen, Y. Zhao, Q. Yi, and J. Zhang, &ldquo;Neovascularization Segmentation via a Multilateral Interaction-Enhanced Graph Convolutional Network,&rdquo; <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>, vol. 47, no. 12, pp. 11107-11123, 2025. <span class="reference-links">[<a href="https://arxiv.org/abs/2508.03197" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://drive.google.com/drive/folders/1D0cnyfi_j90WPNZg-Kuh4piQ1wIQAxap?usp=sharing" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-medt" class="reference">[MedT] J. M. J. Valanarasu, P. Oza, I. Hacihaliloglu, and V. M. Patel, &ldquo;Medical Transformer: Gated Axial-Attention for Medical Image Segmentation,&rdquo; in <i>Springer International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI)</i>, 2021, pp. 36-46. <span class="reference-links">[<a href="https://arxiv.org/abs/2102.10662" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/jeya-maria-jose/Medical-Transformer" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-fat-net" class="reference">[FAT-Net] H. Wu, S. Chen, G. Chen, W. Wang, B. Lei, and Z. Wen, &ldquo;FAT-Net: Feature Adaptive Transformers for Automated Skin Lesion Segmentation,&rdquo; <i>Elsevier Medical Image Analysis</i>, vol. 76, pp. 1-14, 2022. <span class="reference-links">[<a href="https://www.sciencedirect.com/science/article/pii/S1361841521003728" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/SZUcsh/FAT-Net" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-missformer" class="reference">[MISSFormer] X. Huang, Z. Deng, D. Li, X. Yuan, and Y. Fu, &ldquo;MISSFormer: An Effective Transformer for 2D Medical Image Segmentation,&rdquo; <i>IEEE Transactions on Medical Imaging</i>, vol. 42, no. 5, pp. 1484-1494, 2023. <span class="reference-links">[<a href="https://doi.org/10.1109/TMI.2022.3230943" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/ZhifangDeng/MISSFormer" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-levit-unet" class="reference">[LeViT-UNet] G. Xu, X. Zhang, X. He, and X. Wu, &ldquo;LeViT-UNet: Make Faster Encoders with Transformer for Medical Image Segmentation,&rdquo; in <i>Springer Chinese Conference on Pattern Recognition and Computer Vision (PRCV)</i>, 2023, pp. 42-53. <span class="reference-links">[<a href="https://link.springer.com/chapter/10.1007/978-981-99-8543-2_4" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/apple1986/LeViT-UNet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-swin-unet" class="reference">[Swin-UNet] H. Cao, Y. Wang, J. Chen, D. Jiang, X. Zhang, Q. Tian, and M. Wang, &ldquo;Swin-Unet: Unet-Like Pure Transformer for Medical Image Segmentation,&rdquo; in <i>Springer European Conference on Computer Vision (ECCV)</i>, 2022, pp. 205-218. <span class="reference-links">[<a href="https://arxiv.org/abs/2105.05537" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/HuCaoFighting/Swin-Unet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-cycoseg" class="reference">[CyCoSeg] D. O. Medley, C. Santiago, and J. C. Nascimento, &ldquo;CyCoSeg: A Cyclic Collaborative Framework for Automated Medical Image Segmentation,&rdquo; <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>, vol. 44, no. 11, pp. 8167-8182, 2021. <span class="reference-links">[<a href="https://doi.org/10.1109/TPAMI.2021.3113077" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://drive.google.com/drive/folders/1PP8Vuda6Dr72j2VwPuv-5RSxBt_rBGzo?usp=sharing" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-mamba-unet" class="reference">[Mamba-UNet] Z. Wang, J.-Q. Zheng, Y. Zhang, G. Cui, and L. Li, &ldquo;Mamba-UNet: UNet-Like Pure Visual Mamba for Medical Image Segmentation,&rdquo; <i>arXiv preprint arXiv:2402.05079</i>, 2024. <span class="reference-links">[<a href="https://arxiv.org/abs/2402.05079" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/ziyangwang007/Mamba-UNet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-ultralight-vm" class="reference">[UltraLight VM] R. Wu, Y. Liu, G. Ning, P. Liang, and Q. Chang, &ldquo;UltraLight VM-UNet: Parallel Vision Mamba Significantly Reduces Parameters for Skin Lesion Segmentation,&rdquo; <i>Elsevier Patterns</i>, vol. 6, no. 11, 2025. <span class="reference-links">[<a href="https://arxiv.org/abs/2403.20035" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/wurenkai/UltraLight-VM-UNet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-lkm-unet" class="reference">[LKM-UNet] J. Wang, J. Chen, D. Chen, and J. Wu, &ldquo;LKM-UNet: Large Kernel Vision Mamba UNet for Medical Image Segmentation,&rdquo; in <i>Springer International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI)</i>, 2024, pp. 360-370. <span class="reference-links">[<a href="https://papers.miccai.org/miccai-2024/467-Paper0286.html" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/wjh892521292/LKM-UNet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-h-vmunet" class="reference">[H-vmuNet] R. Wu, Y. Liu, P. Liang, and Q. Chang, &ldquo;H-vmuNet: High-order Vision Mamba UNet for Medical Image Segmentation,&rdquo; <i>Elsevier Neurocomputing</i>, vol. 624, pp. 1-11, 2025. <span class="reference-links">[<a href="https://www.sciencedirect.com/science/article/abs/pii/S0925231225001195" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/wurenkai/H-vmunet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-mamba-sea" class="reference">[Mamba-Sea] Z. Cheng, J. Guo, J. Zhang, L. Qi, L. Zhou, Y. Shi, and Y. Gao, &ldquo;Mamba-Sea: A Mamba-Based Framework With Global-to-Local Sequence Augmentation for Generalizable Medical Image Segmentation,&rdquo; <i>IEEE Transactions on Medical Imaging</i>, vol. 44, no. 9, pp. 3741-3755, 2025. <span class="reference-links">[<a href="https://arxiv.org/abs/2504.17515" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/orange-czh/Mamba-Sea" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-fusionnet" class="reference">[FusionNet] T. M. Quan, D. G. C. Hildebrand, and W.-K. Jeong, &ldquo;FusionNet: A Deep Fully Residual Convolutional Neural Network for Image Segmentation in Connectomics,&rdquo; <i>Frontiers in Computer Science</i>, vol. 3, pp. 1-12, 2021. <span class="reference-links">[<a href="https://www.frontiersin.org/journals/computer-science/articles/10.3389/fcomp.2021.613981/full" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/GunhoChoi/FusionNet-Pytorch" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-mbp-ssnet" class="reference">[MBP-SSNet] Y. Wang, Y. Zhang, L. Zhang, Y. Xu, R. Feng, H. Cai, J. Xue, Z. Zhao, X. Guo, Y. Wei <i>et al.</i>, &ldquo;Multi-Bottleneck Progressive Propulsion Network for Medical Image Semantic Segmentation With Integrated Macro-Micro Dual-Stage Feature Enhancement and Refinement,&rdquo; <i>Elsevier Expert Systems with Applications</i>, vol. 252, pp. 1-25, 2024. <span class="reference-links">[<a href="https://www.sciencedirect.com/science/article/pii/S0957417424010455" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/YF-W/MBP-SSNet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-eag-sae-estf" class="reference">[EAG-SAE-ESTF] X. Zhang, S. Wang, W. Lv, M. Zhou, S. Li, J. Yang, M. Huang, Y. Su, and T. Shen, &ldquo;EAG-SAE-ESTF: An Entropy-Aware Gated Network With Scale-Adaptive Enhancement and Elastic Spatial Topology Fusion for Coronary Artery Segmentation,&rdquo; <i>Elsevier Information Fusion</i>, pp. 1-18, 2026. <span class="reference-links">[<a href="https://www.sciencedirect.com/science/article/abs/pii/S1566253525006694" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/XiangZhang1997/EAG-SAE-ESTF" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-gobletnet" class="reference">[GobletNet] Y. Zhou, L. Li, C. Wang, L. Song, and G. Yang, &ldquo;GobletNet: Wavelet-Based High-Frequency Fusion Network for Semantic Segmentation of Electron Microscopy Images,&rdquo; <i>IEEE Transactions on Medical Imaging</i>, vol. 44, no. 2, pp. 1058-1069, 2025. <span class="reference-links">[<a href="https://ieeexplore.ieee.org/document/10705356/" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/Yanfeng-Zhou/GobletNet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-madgnet" class="reference">[MADGNet] J.-H. Nam, N. S. Syazwany, S. J. Kim, and S.-C. Lee, &ldquo;Modality-agnostic domain generalizable medical image segmentation by multi-frequency in multi-scale attention,&rdquo; in <i>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</i>, 2024, pp. 11480-11491. <span class="reference-links">[<a href="https://openaccess.thecvf.com/content/CVPR2024/html/Nam_Modality-agnostic_Domain_Generalizable_Medical_Image_Segmentation_by_Multi-Frequency_in_Multi-Scale_CVPR_2024_paper.html" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/Inha-CVAI/MADGNet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-fftmed" class="reference">[FFTMed] V. T. Pham, M. H. Ha, B. V. Bui, and T. S. Hy, &ldquo;FFTMed: Leveraging Fast-Fourier Transform for a Lightweight and Adversarial-Resilient Medical Image Segmentation Framework,&rdquo; <i>Scientific Reports</i>, vol. 15, no. 1, p. 37879, 2025. <span class="reference-links">[<a href="https://www.nature.com/articles/s41598-025-21799-5" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/HySonLab/LightMed" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-cswin-unet" class="reference">[CSWin-UNet] X. Liu, P. Gao, T. Yu, F. Wang, and R.-Y. Yuan, &ldquo;CSWin-UNet: Transformer UNet with Cross-Shaped Windows for Medical Image Segmentation,&rdquo; <i>Elsevier Information Fusion</i>, vol. 113, pp. 1-12, 2025. <span class="reference-links">[<a href="https://www.sciencedirect.com/science/article/pii/S1566253524004123" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/eatbeanss/CSWin-UNet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p><b>Hybrid-stream Frameworks (5)</b></p>
+
+<p id="ref-transfuse" class="reference">[TransFuse] Y. Zhang, H. Liu, and Q. Hu, &ldquo;TransFuse: Fusing Transformers and CNNs for Medical Image Segmentation,&rdquo; in <i>Springer International conference on medical image computing and computer-assisted intervention</i>, 2021, pp. 14-24. <span class="reference-links">[<a href="https://link.springer.com/chapter/10.1007/978-3-030-87193-2_2" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/Rayicer/TransFuse" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-h2former" class="reference">[H2Former] A. He, K. Wang, T. Li, C. Du, S. Xia, and H. Fu, &ldquo;H2Former: An Efficient Hierarchical Hybrid Transformer for Medical Image Segmentation,&rdquo; <i>IEEE Transactions on Medical Imaging</i>, vol. 42, no. 9, pp. 2763-2775, 2023. <span class="reference-links">[<a href="https://ieeexplore.ieee.org/document/10093768" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/NKUhealong/H2Former" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-mambaeviscrib" class="reference">[MambaEviScrib] X. Han, X. Li, J. Shang, Y. Liu, K. Chen, S. Xu, Q. Liu, and Q. Zhang, &ldquo;MambaEviScrib: Mamba and Evidence-Guided Consistency Enhance CNN Robustness for Scribble-Based Weakly Supervised Ultrasound Image Segmentation,&rdquo; <i>Elsevier Information Fusion</i>, vol. 126, p. 103590, 2026. <span class="reference-links">[<a href="https://www.sciencedirect.com/science/article/pii/S1566253525006621" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/GtLinyer/MambaEviScrib" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-xnet" class="reference">[XNet] Y. Zhou, J. Huang, C. Wang, L. Song, and G. Yang, &ldquo;XNet: Wavelet-Based Low and High Frequency Fusion Networks for Fully- and Semi-Supervised Semantic Segmentation of Biomedical Images,&rdquo; in <i>Proceedings of the IEEE/CVF International Conference on Computer Vision (CVPR)</i>, 2023, pp. 21085-21096. <span class="reference-links">[<a href="https://openaccess.thecvf.com/content/ICCV2023/html/Zhou_XNet_Wavelet-Based_Low_and_High_Frequency_Fusion_Networks_for_Fully-_ICCV_2023_paper.html" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/Yanfeng-Zhou/XNet" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+<p id="ref-ds2f" class="reference">[DS2F] Z. Qiu, Y. Hu, X. Chen, D. Zeng, Q. Hu, and J. Liu, &ldquo;Rethinking Dual-Stream Super-Resolution Semantic Learning in Medical Image Segmentation,&rdquo; <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>, vol. 46, no. 1, pp. 451-464, 2024. <span class="reference-links">[<a href="https://ieeexplore.ieee.org/document/10274145" target="_blank" rel="noopener noreferrer">paper</a>, <a href="https://github.com/Qsingle/imed_vision" target="_blank" rel="noopener noreferrer">implementation</a>]</span></p>
+
+
+<br>
+<hr align="center" size="2" width="100%">
+
+</body>
+</html>
