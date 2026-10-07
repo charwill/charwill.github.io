@@ -247,7 +247,7 @@
 
 <hr>
 <p style="text-align:justify">
-<a name="Abstract"><b>Abstract</b></a>- Medical image segmentation (MIS) remains challenging due to composite degradations and multi-scale geometric variations, which jointly impair lesion-background separability, structural consistency, and optimization stability. Existing single-stream frameworks entangle heterogeneous cues within a single representation pathway, while hybrid-stream approaches often rely on generic or static fusion, limiting effective coordination across domains and failing to explicitly address optimization instability. To overcome these limitations, we propose a new optimization-aware dual-domain framework for MIS (<i>O2D-MedNet</i>). First, a dynamic dual-domain interaction (DDI) module integrates <i>Fourier</i>- and <i>Wavelet</i>-domain features to suppress degradation-sensitive responses while preserving structural and fine-detail information. Second, a cross-backbone contour-guided fusion (CGF) module enables selective interaction between CNN-based local detail modeling and visual state-space-based global structure modeling, improving boundary accuracy and representation consistency. Third, a gradient-context optimization (GCO) strategy stabilizes training by adaptively adjusting learning dynamics based on loss trends and gradient statistics, mitigating instability caused by class imbalance and heterogeneous sample difficulty. Extensive experiments on six benchmarks demonstrate consistent improvements over state-of-the-art MIS methods across multiple imaging modalities. Further analyses confirm enhanced sensitivity, structural consistency, and optimization stability, validating the effectiveness of the proposed <i>O2D-MedNet</i> for robust MIS under heterogeneous conditions.
+<a name="Abstract"><b>Abstract</b></a>- Medical image segmentation (MIS) remains challenging due to composite degradations and multi-scale geometric variations, which jointly impair lesion-background separability, structural consistency, and optimization stability. Existing single-stream frameworks entangle heterogeneous cues within a single representation pathway, while hybrid-stream approaches often rely on generic or static fusion, limiting effective coordination across domains and failing to explicitly address optimization instability. To overcome these limitations, we propose a new optimization-aware dual-domain framework for MIS (<i>O2D-MedNet</i>). First, a degradation-aware dual-domain interaction (DDI) module integrates <i>Fourier</i>- and <i>Wavelet</i>-domain features to suppress degradation-sensitive responses while preserving structural and fine-detail information. Second, a cross-backbone contour-guided fusion (CGF) module enables selective interaction between CNN-based local detail modeling and visual state-space-based global structure modeling, improving boundary accuracy and representation consistency. Third, a gradient-context optimization (GCO) strategy stabilizes training by adaptively adjusting learning dynamics based on loss trends and gradient statistics, mitigating instability caused by class imbalance and heterogeneous sample difficulty. Extensive experiments on six benchmarks demonstrate consistent improvements over state-of-the-art MIS methods across multiple imaging modalities. Further analyses confirm enhanced sensitivity, structural consistency, and optimization stability, validating the effectiveness of the proposed <i>O2D-MedNet</i> for robust MIS under heterogeneous conditions.
 </p>
 
 <p>
@@ -414,11 +414,11 @@ The experiments evaluate three aspects of <i>O2D-MedNet</i>: robustness under he
 
 <p class="table-note"><b>Navigation:</b> Click a model name to jump to its corresponding reference below. Scroll horizontally to view all six datasets on smaller screens.</p>
 
-<p id="table1-caption" class="table-caption"><b>Table 1.</b> Quantitative comparison in terms of mIoU and Dice on the Oral, Kvasir-SEG, COVID-19, MLUA, CT2US, and BUSI datasets. Comparison methods are grouped into Reference Baselines, Single-stream Frameworks, and Hybrid-stream Frameworks. The best and second-best results in each column are highlighted in <span class="metric-best">red</span> and <span class="metric-second">blue</span>, respectively.</p>
+<p id="table2-caption" class="table-caption"><b>Table 2.</b> Quantitative comparison in terms of mIoU and Dice on the Oral, Kvasir-SEG, COVID-19, MLUA, CT2US, and BUSI datasets. Comparison methods are grouped into Reference Baselines, Single-stream Frameworks, and Hybrid-stream Frameworks. The best and second-best results in each column are highlighted in <span class="metric-best">red</span> and <span class="metric-second">blue</span>, respectively.</p>
 
 <div class="table-wrap" role="region" aria-label="Scrollable quantitative comparison table" tabindex="0">
-<table class="comparison-table" aria-describedby="table1-caption">
-  <caption class="sr-only">Table 1 quantitative comparison across six medical image segmentation datasets.</caption>
+<table class="comparison-table" aria-describedby="table2-caption">
+  <caption class="sr-only">Table 2 quantitative comparison across six medical image segmentation datasets.</caption>
   <colgroup>
     <col class="group-column">
     <col class="method-column">
@@ -473,7 +473,7 @@ The experiments evaluate three aspects of <i>O2D-MedNet</i>: robustness under he
     </tr>
     <tr>
       <th scope="row" class="method-cell"><a class="model-link" href="#ref-medsam">MedSAM</a></th>
-      <td>79.4 &plusmn; 4.5</td><td>88.2 &plusmn; 2.9</td><td>77.6 &plusmn; 3.1</td><td>81.9 &plusmn; 2.6</td><td>75.7 &plusmn; 5.2</td><td>86.0 &plusmn; 4.6</td><td>62.5 &plusmn; 5.5</td><td>74.8 &plusmn; 6.3</td><td>94.0 &plusmn; 3.8</td><td>97.2 &plusmn; 1.9</td><td class="metric-second">67.1 &plusmn; 3.8</td><td>73.9 &plusmn; 3.6</td>
+      <td>79.4 &plusmn; 4.5</td><td>88.2 &plusmn; 2.9</td><td>77.6 &plusmn; 3.1</td><td>81.9 &plusmn; 2.6</td><td>75.7 &plusmn; 5.2</td><td>86.0 &plusmn; 4.6</td><td>62.5 &plusmn; 5.5</td><td>74.8 &plusmn; 6.3</td><td>94.0 &plusmn; 3.0</td><td>97.2 &plusmn; 1.9</td><td class="metric-second">67.1 &plusmn; 3.8</td><td>73.9 &plusmn; 3.6</td>
     </tr>
 
     <tr class="group-start">
